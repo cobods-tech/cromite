@@ -63,3 +63,14 @@ Do not start the workflow until the runner and signing secrets are confirmed. No
 The Android arm64 build step now adjusts the checked-out Chromium `chrome/VERSION` PATCH field before GN generation. It selects a patch value greater than the source PATCH and based on the GitHub Actions workflow run number. Chromium derives Android version codes from the BUILD/PATCH components, so this makes successive builds from the same Chromium BUILD line installable as upgrades rather than reusing an identical versionCode.
 
 This mechanism is a build-time safeguard, not yet a verified release guarantee. It must be checked against the first real APK's manifest and then against the next build's manifest. The workflow fails if the computed PATCH exceeds 999. Never deliver an update unless its actual package name, signing certificate, and versionCode have been compared with the installed APK.
+
+
+## Workflow correctness review (2026-11-18)
+
+A static review found and corrected two workflow issues:
+- GitHub Actions repository `contents` permission is now `read`, so checkout can read the selected fork commit.
+- The Python version-file writer now emits actual newline characters. The previous double-escaped sequence would have written literal `\\n` text into `chrome/VERSION`.
+
+The Android version-code strategy is based on Chromium's version-code generator: Android versionCode incorporates the BUILD number and a three-digit PATCH field, followed by package/ABI digits. Incrementing PATCH within the same BUILD line therefore raises versionCode for successive builds. This still requires confirmation against the first actual APK manifest.
+
+The workflow has not been run. Its self-hosted runner labels, persistent storage mounts, Docker image availability, and encrypted keystore/pref-hash secrets remain unverified. The repository currently has no recorded Actions build run for this branch.
