@@ -24,6 +24,16 @@ The current patch list already applies:
 
 The Cromite settings patch adds a GRDP file with four custom section-title messages. These are Cromite-specific and are not covered by Chromium's pre-existing XTB entries.
 
+## Cromite GRDP integration correction
+
+A further source audit found that the existing settings and first-run patches create GRDP fragments but do not add them to Chromium's parent `android_chrome_strings.grd`. A GRDP file is not compiled merely because it exists in the source tree: the parent GRD must include it with a `<part>` entry.
+
+A new patch, `Integrate-Cromite-Android-string-parts.patch`, now adds both:
+- `cromite_android_chrome_strings_grd/Cromite-settings-ui.grdp`
+- `cromite_android_chrome_strings_grd/Welcome-screen.grdp`
+
+It is ordered after the patches that create those files. The hunk format and patch-list references have been checked, but the complete 328-patch series has not yet been applied to a Chromium checkout. The first actual build must confirm that GRIT accepts the integration and that no message IDs collide.
+
 ## Cromite-specific English strings identified
 
 The current patch set adds at least these eight user-facing English messages that need Simplified Chinese coverage:
@@ -38,6 +48,9 @@ The current patch set adds at least these eight user-facing English messages tha
 | `IDS_DATA_EXPOSED_TO_WEBSITE_SECTION_TITLE` | Data exposed to the websites |
 | `IDS_INCOGNITO_RELATED_SECTION_TITLE` | Incognito mode |
 | `IDS_DATA_EXPOSED_TO_DEVICE_SECTION_TITLE` | Data exposed in the device |
+| `IDS_FRE_CONTINUE` | Continue |
+| `IDS_AUTO_UPDATER_CHECK` | Automatic checks for Bromite app updates |
+| `IDS_BROMITE_FRE_FOOTER_PRIVACY_POLICY` | First-run privacy-policy explanation with four link placeholders |
 
 These are not guaranteed to exist in Chromium's upstream zh-CN translation bundles because they are introduced by Cromite patches.
 
@@ -68,7 +81,7 @@ The Android GN configuration sets `chrome_public_manifest_package = "org.cromite
 ## Validation status
 
 - Upstream zh-CN catalog declarations: confirmed from Chromium source.
-- Cromite custom-string translation integration: not yet verified.
+- Cromite GRDP parent integration: added to the patch series; not yet build-verified.\n- Cromite custom-string zh-CN translations: not yet added; generated message IDs must be obtained from the exact GRIT build.
 - Full APK locale packaging: not yet verified.
 - Runtime Chinese UI: not yet tested.
 - APK build, release signing, and in-place update: not yet completed.
