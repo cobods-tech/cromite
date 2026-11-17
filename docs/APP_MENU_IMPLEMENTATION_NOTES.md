@@ -80,6 +80,16 @@ The page menu starts with an existing five-action row (forward, bookmark, downlo
 
 The currently existing five-action row is not sufficient to satisfy the full two-page design. The first page should prioritize frequent actions and the second page should hold infrequent tools/settings; all original actions must remain reachable. A precise action-to-page mapping is still pending review against the full pinned TabbedAppMenuPropertiesDelegate.java and Cromite-specific additions before implementation.
 
+## Cromite patch audit: actions that must not disappear
+
+A focused scan of the active patch list found existing Cromite customizations that affect the user's "hide infrequent items, do not delete features" requirement:
+
+- Add-exit-menu-item.patch adds an Exit action to both page and overview menu construction. It must remain available in the redesigned menu.
+- Remove-help-menu-item.patch comments out the Help item in TabbedAppMenuPropertiesDelegate and also suppresses several Help entries in settings/autofill-related screens. It additionally changes the Help WebUI route to the Cromite GitHub issue tracker and short-circuits the normal help flow. This is a real feature/UI removal, not merely moving Help to a secondary page.
+- The redesigned menu must not silently inherit this removal as if Help never existed. A follow-up compatibility patch should restore a visible Help entry (at minimum in the app menu) and preserve a working route; settings-page Help entries should be audited separately rather than indiscriminately re-enabled.
+
+This audit is based on the actual patch files in this repository's active patch list. No restoration patch has been applied yet.
+
 ## V1 implementation requirements
 
 1. Keep the existing model IDs and click-handler route for every original menu action.
