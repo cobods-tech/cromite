@@ -24,6 +24,23 @@ The current patch list already applies:
 
 The Cromite settings patch adds a GRDP file with four custom section-title messages. These are Cromite-specific and are not covered by Chromium's pre-existing XTB entries.
 
+## Cromite-specific English strings identified
+
+The current patch set adds at least these eight user-facing English messages that need Simplified Chinese coverage:
+
+| Message ID | English source |
+|---|---|
+| `IDS_MOVE_TOOLBAR_BOTTOM_TITLE` | Move toolbar to bottom |
+| `IDS_DISABLE_TOOLBAR_SWIPE_UP` | Disable toolbar swipe up |
+| `IDS_SHOW_NTP_AT_STARTUP_TITLE` | Show NTP at startup |
+| `IDS_SHOW_NTP_AT_STARTUP_SUMMARY` | Enable showing a NewTabPage at startup and allows selection of the last open tab |
+| `IDS_BROWSING_DATA_SECTION_TITLE` | Browsing data |
+| `IDS_DATA_EXPOSED_TO_WEBSITE_SECTION_TITLE` | Data exposed to the websites |
+| `IDS_INCOGNITO_RELATED_SECTION_TITLE` | Incognito mode |
+| `IDS_DATA_EXPOSED_TO_DEVICE_SECTION_TITLE` | Data exposed in the device |
+
+These are not guaranteed to exist in Chromium's upstream zh-CN translation bundles because they are introduced by Cromite patches.
+
 ## GRIT requirements for custom strings
 
 Chromium's localization guidance establishes that:
