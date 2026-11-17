@@ -68,3 +68,18 @@ A deeper check of the drag implementation shows that restoring the view-to-data 
 - Therefore `Restore-NTP-tile-data-lookup.patch` restores the final `TileView -> SiteSuggestion` data lookup, but full drag/reorder is **not yet restored or validated** for the multi-row grid. The next code change must make tile movement grid-aware (X and Y positions / target selection) or provide a deliberate, accessible alternative reorder interaction. Do not simply set auto-scroll back to true.
 
 The source-level design above is supported by the grid class added in `Restore-Simplified-NTP-launch.patch` and Chromium's `TileMovement` / `TileDragSession` implementations. The external Chromium source references used for this investigation are not the exact pinned 153.0.8010.37 checkout, so final patch application and compilation against that pinned checkout remain mandatory.
+ 
+## Grid-aware tile reordering patch (2026-11-18)
+
+Added `build/patches/Make-NTP-tile-reordering-grid-aware.patch`, immediately after the tile-data lookup restoration patch in the patch list.
+
+The patch adapts the original one-dimensional drag model to the simplified row-major grid:
+- Capture each tile's original X and Y coordinates.
+- Select the drop target by squared Euclidean distance in both axes.
+- Animate shifted background tiles to both their original X and Y positions.
+- Move the active tile in both axes and constrain it to the actual grid bounds. X bounds scan every tile, which is important when the final row is incomplete.
+- Keep the existing `SiteSuggestion` callback and reorder acceptance flow; auto-scroll remains disabled because the grid has no horizontal scroll parent.
+
+**Validation status:** This is a source patch authored against the Chromium implementation inspected from upstream source references, not yet applied with `git am` to a full Chromium 153.0.8010.37 checkout. Its unified-diff hunk counts and patch-list entry were checked, but exact-context application, Java compilation, UI drag tests (LTR/RTL, partial last row, 1–4 rows), and actual APK build remain pending. Do not describe drag sorting as verified until those checks pass.
+
+Upstream source references used to establish the original one-axis assumptions: `TileMovement` stores X positions and moves via X only; `TileDragSession` clamps and selects the target using X. See Chromium source pages cited in the project discussion.
