@@ -1,11 +1,11 @@
 From: cobods-tech <noreply@github.com>
 Subject: Include Cromite Android string fragments in the GRIT catalog
 
-The Cromite settings and first-run patches add GRDP fragments, but the
-Chromium Android strings GRD must explicitly include them for GRIT to
-generate their Android resources. Keep both fragments in the existing
-Android Chrome catalog so their strings can later receive zh-CN XTB
-translations without creating a new translation catalog.
+The Cromite settings, first-run, and Android extension patches add GRDP
+fragments, but the Chromium Android strings GRD must explicitly include
+them for GRIT to generate their Android resources. Keep all four fragments
+in the existing Android Chrome catalog so their strings can later receive
+zh-CN XTB translations without creating a new translation catalog.
 
 ---
 diff --git a/chrome/browser/ui/android/strings/android_chrome_strings.grd b/chrome/browser/ui/android/strings/android_chrome_strings.grd
