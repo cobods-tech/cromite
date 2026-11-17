@@ -494,7 +494,24 @@ jobs:
         if: ${{ (github.event.inputs.target_os == 'android' || github.event.inputs.target_os == 'all') && (github.event.inputs.build == 'arm64' || github.event.inputs.build == 'all') }}
         shell: bash
         run: |
+          set -Eeuo pipefail
+
+          # Android SDK tools may be installed outside the container's default PATH.
+          # Prefer configured SDK roots, then check common image locations.
+          for sdk_root in "${ANDROID_SDK_ROOT:-}" "${ANDROID_HOME:-}" /opt/android-sdk /usr/lib/android-sdk /home/lg/Android/Sdk; do
+            if [[ -n "$sdk_root" && -d "$sdk_root" ]]; then
+              while IFS= read -r tool_dir; do
+                case "$tool_dir" in
+                  */cmdline-tools/*/bin|*/tools/bin|*/platform-tools|*/build-tools/*)
+                    PATH="$tool_dir:$PATH"
+                    ;;
+                esac
+              done < <(find "$sdk_root" -type f \\( -name apkanalyzer -o -name apksigner \\) -printf '%h\\n' 2>/dev/null | sort -u)
+            fi
+          done
+
           PATH=$WORKSPACE/chromium/src/third_party/llvm-build/Release+Asserts/bin:$WORKSPACE/depot_tools/:$PATH
+          export PATH
           export EXPECTED_PACKAGE=org.cromite.cromite
           export REQUIRE_ZH_CN=1
           tools/verify-android-apk.sh "$WORKSPACE/chromium/src/out/arm64/apks/ChromePublic.apk"
