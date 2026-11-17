@@ -5,7 +5,7 @@ Subject: Enable share intent
 This patch allows to activate the management of android.intent.action.SEND
 with new flag "shared-intent-ui" default active.
 
-See also: https://github.com/bromite/bromite/issues/1062
+See also: https://github.com/cromite/cromite/issues/1062
 
 Original License: GPL-2.0-or-later - https://spdx.org/licenses/GPL-2.0-or-later.html
 License: GPL-3.0-only - https://spdx.org/licenses/GPL-3.0-only.html
@@ -500,17 +500,17 @@ diff --git a/chrome/browser/ui/android/strings/android_chrome_strings.grd b/chro
          List of sharing options is closed.
        </message>
 +
-+      <message name="IDS_SHARED_INTENT_SHARE_ACTIVITY_TITLE" desc="Text that will appear in the Android share dialog to open an URL with Bromite.">
-+        Open URL with Bromite
++      <message name="IDS_SHARED_INTENT_SHARE_ACTIVITY_TITLE" desc="Text that will appear in the Android share dialog to open an URL with Cromite.">
++        Open URL with Cromite
 +      </message>
-+      <message name="IDS_SHARED_INTENT_SHARE_ACTIVITY_TEXT" desc="Text to show for opening with Bromite.">
-+        Will open <ph name="URL">%1$s</ph> with Bromite
++      <message name="IDS_SHARED_INTENT_SHARE_ACTIVITY_TEXT" desc="Text to show for opening with Cromite.">
++        Will open <ph name="URL">%1$s</ph> with Cromite
 +      </message>
-+      <message name="IDS_SHARED_INTENT_SHARE_ACTIVITY_OPEN_TEXT" desc="Text to show in the button for opening with Bromite.">
-+        Open with Bromite
++      <message name="IDS_SHARED_INTENT_SHARE_ACTIVITY_OPEN_TEXT" desc="Text to show in the button for opening with Cromite.">
++        Open with Cromite
 +      </message>
-+      <message name="IDS_SHARED_INTENT_SHARE_ACTIVITY_OPENINCOGNITO_TEXT" desc="Text to show in the button for opening with Bromite in incognito.">
-+        Open with Bromite Incognito
++      <message name="IDS_SHARED_INTENT_SHARE_ACTIVITY_OPENINCOGNITO_TEXT" desc="Text to show in the button for opening with Cromite in incognito.">
++        Open with Cromite Incognito
 +      </message>
 +
        <!-- Sms Fetcher -->
