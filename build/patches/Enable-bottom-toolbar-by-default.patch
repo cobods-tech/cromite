@@ -1,0 +1,22 @@
+From: cobods-tech <noreply@github.com>
+Subject: Enable the bottom toolbar by default
+
+Use the existing Cromite preference to allow users to switch the bottom
+toolbar off again. The default layout follows the agreed V1 navigation
+reference while preserving the original toggle.
+
+---
+diff --git a/cc/base/features.cc b/cc/base/features.cc
+--- a/cc/base/features.cc
++++ b/cc/base/features.cc
+@@ -29,7 +29,7 @@ BASE_FEATURE(kMoveTopToolbarToBottom,
+              "MoveTopToolbarToBottom",
+-             base::FEATURE_DISABLED_BY_DEFAULT);
++             base::FEATURE_ENABLED_BY_DEFAULT);
+diff --git a/chrome/browser/flags/android/java/src/org/chromium/chrome/browser/flags/ChromeFeatureList.java b/chrome/browser/flags/android/java/src/org/chromium/chrome/browser/flags/ChromeFeatureList.java
+--- a/chrome/browser/flags/android/java/src/org/chromium/chrome/browser/flags/ChromeFeatureList.java
++++ b/chrome/browser/flags/android/java/src/org/chromium/chrome/browser/flags/ChromeFeatureList.java
+@@ -1266,7 +1266,7 @@ public abstract class ChromeFeatureList {
+     public static final CachedFlag sMoveTopToolbarToBottom =
+-            newCachedFlag(MOVE_TOP_TOOLBAR_TO_BOTTOM, false);
++            newCachedFlag(MOVE_TOP_TOOLBAR_TO_BOTTOM, true);
