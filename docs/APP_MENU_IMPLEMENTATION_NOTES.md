@@ -192,3 +192,42 @@ This is a grouping proposal, not a code-level commitment: before implementation,
 The new paged grid should be a reusable menu view type that consumes original menu item models and retains their menu IDs, enabled/checked/managed state, icons, visible titles, and accessibility descriptions. The context-specific delegate should classify models only after its existing builders have applied all visibility rules. Update and other custom rows must remain live and must not be copied into stale one-time grid state.
 
 Exact pinned-source inventory is now documented. The generic handler/binder and its child-click dispatch path still require exact-tag reinspection before a code patch is written. No two-page menu implementation patch or runtime test is claimed at this stage.
+
+
+## Cromite-specific menu patch reconciliation (active patch-list order)
+
+The active patch list was re-read and the relevant patch positions were checked:
+
+- `Add-exit-menu-item.patch` is applied before `Remove-help-menu-item.patch`.
+- `Restore-help-entry-in-android-app-menu.patch` is appended after the original help-removal patch and the other patches.
+- `Enable-bottom-toolbar-by-default.patch` follows `Move-navigation-bar-to-bottom.patch`; the latter remains the owner of bottom navigation-bar ordering behavior.
+
+### Exit action
+
+The existing `Add-exit-menu-item.patch` adds the same `R.id.exit_id` action in both active-page construction paths (with and without Chromium submenus). Both `ChromeActivity` and `ChromeTabbedActivity` already handle that ID by calling `ApplicationLifetime.terminate(false)`.
+
+Consequences for the paged-menu work:
+
+- Keep the original Exit model and ID; do not implement a second exit callback in the grid.
+- It is currently added to active-page menus, not to the tab-overview or empty-tablet menu builders. Preserve that existing visibility unless the user explicitly asks to change it.
+- Exit belongs on page two because it is not a frequent browsing action, but it must remain visible and reachable.
+
+### Help action
+
+The later restoration patch restores `buildHelpItem()` in the non-submenu page menu. In the submenu-enabled path, the existing Help parent item is already present. The restored Help action uses Cromite's existing route behavior; it must not be redirected to Google's support destination.
+
+The settings-page Help controls removed by `Remove-help-menu-item.patch` are separate from the app-menu grid and remain outside this specific implementation task.
+
+### Bottom toolbar
+
+The existing bottom-toolbar feature patch is deliberately applied after the navigation-bar relocation patch. Menu presentation must continue to anchor to the actual menu button and must not reverse the navigation ordering a second time. Grid paging must not modify the bottom-toolbar feature flag or toolbar position.
+
+## Release version monotonicity cross-check
+
+The current Android build workflow edits the checked-out Chromium `chrome/VERSION` PATCH field before building:
+
+`next_patch = max(current_patch + 1, 100 + GITHUB_RUN_NUMBER)`
+
+It rejects values above 999. This preserves a strictly increasing PATCH value across builds on a persistent workspace and also advances with GitHub Actions run numbers. The APK verifier separately rejects a non-numeric or non-positive versionCode and can enforce a supplied minimum. It does not independently query a previously released APK; the monotonicity guarantee therefore depends on this workflow's version-generation step remaining in the release path.
+
+No changes to the menu implementation source have been made in this pass. Exact pinned `AppMenuHandlerImpl.java` and `AppMenuItemViewBinder.java` retrieval was temporarily blocked by GitHub API rate limiting, so the previously identified child-click-handler safety condition remains unresolved. Do not write the custom grid binder until that exact-version dispatch path can be verified.
