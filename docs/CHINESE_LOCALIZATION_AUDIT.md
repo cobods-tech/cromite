@@ -155,3 +155,19 @@ A focused read of the active site-permission patches covered:
 The custom source messages include autoplay, image loading, JavaScript JIT/WebAssembly, WebRTC, and popup/redirect labels, summaries, exception-list labels, and explanatory copy. They are currently English source strings and therefore remain part of the Cromite-specific zh-CN translation workload. The WebRTC enabled/disabled summaries are the literal strings "Enabled" and "Disabled"; the JIT description is "Enable the JIT compiler and WebAssembly support in V8". These are not missing/empty messages.
 
 No Chinese text was left in the English GRDP source messages. An attempted direct source-string translation was reverted because it would make Chinese the fallback text for every locale, contrary to the GRIT localization requirements above. The correct next step is to obtain generated message IDs from a successful pinned Chromium 153 GRIT run, then add translations to the correct zh-CN XTB catalog(s). This targeted review does not establish that all site-permission strings or all custom UI strings have been found.
+
+
+### Additional privacy, bookmark, and session string inventory (2026-11-18)
+
+A second targeted scan of six active patches found these additional Cromite-added user-visible messages. They are English source strings and need locale-specific zh-CN coverage after their owning GRIT catalogs and generated message IDs are confirmed.
+
+| Patch | Newly identified UI text |
+|---|---|
+| `Add-bookmark-import-export-actions.patch` | Import/export labels, overwrite confirmation, Yes/choose-another-file actions, save failure |
+| `Add-an-always-incognito-mode.patch` | Always-incognito title/summary, open-links-in-incognito, history-in-incognito, remember-site-settings |
+| `Add-option-to-not-persist-tabs-across-sessions.patch` | Close tabs on exit title and privacy warning |
+| `History-number-of-days-privacy-setting.patch` | History expiry title, no-history/forever options, day/days units and summary |
+| `Add-setting-to-clear-data-on-exit.patch` | Clear data on close/startup titles, summaries, and startup tab label |
+| `Add-custom-tab-intents-privacy-option.patch` | Allow custom-tab intents, ephemeral storage partition, and open external links in Incognito |
+
+This pass records the inventory only. It does not change English GRIT source messages into Chinese, invent message IDs, or claim that any of these strings is already translated. The next localization implementation step remains generation of the exact resource IDs from the pinned Chromium 153 source and addition of translations to the matching zh-CN XTB catalogs.
