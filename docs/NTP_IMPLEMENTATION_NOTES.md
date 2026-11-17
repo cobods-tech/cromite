@@ -57,3 +57,14 @@ This restores the view-to-`SiteSuggestion` lookup needed by reorder logic, but i
 - The NTP branding, site-tile presentation, and interaction regressions listed above are confirmed from its added/changed hunks.
 - No new NTP implementation patch has been created.
 - No full Chromium source patch-application test, Android compilation, runtime screenshot test, accessibility test, or APK test has been performed.
+
+## Grid drag/reorder compatibility finding (2026-11-18)
+
+A deeper check of the drag implementation shows that restoring the view-to-data lookup is necessary but not sufficient to claim drag sorting works in the 4-column grid:
+
+- `MostVisitedTilesGridLayout` exposes tile-only indexing through `getTileCount()` / `getTileAt()`; the separate Add Custom Link action is added as a non-tile child and is not part of the draggable tile list.
+- `TileDragSession.start()` creates the auto-scroll helper only when `isAutoScrollEnabled()` is true. Since the simplified NTP sets it to false, a null `getOuterView()` is not dereferenced in the ordinary drag-session setup. Re-enabling auto-scroll without restoring a real `HorizontalScrollView` would be unsafe.
+- However, Chromium's current `TileMovement` implementation records only each tile's X coordinate, chooses the nearest tile by X alone, and shifts tiles along a single horizontal sequence. That model assumes a one-row strip. In a multi-row grid, X coordinates repeat on each row, so drag targets can be ambiguous and the visual movement can cross rows incorrectly.
+- Therefore `Restore-NTP-tile-data-lookup.patch` restores the final `TileView -> SiteSuggestion` data lookup, but full drag/reorder is **not yet restored or validated** for the multi-row grid. The next code change must make tile movement grid-aware (X and Y positions / target selection) or provide a deliberate, accessible alternative reorder interaction. Do not simply set auto-scroll back to true.
+
+The source-level design above is supported by the grid class added in `Restore-Simplified-NTP-launch.patch` and Chromium's `TileMovement` / `TileDragSession` implementations. The external Chromium source references used for this investigation are not the exact pinned 153.0.8010.37 checkout, so final patch application and compilation against that pinned checkout remain mandatory.
