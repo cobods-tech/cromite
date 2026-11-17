@@ -3,7 +3,9 @@ ARG VERSION
 FROM uazo/chromium:$VERSION
 
 ARG CROMITE_SHA
+ARG CROMITE_REPOSITORY
 ENV CROMITE_SHA=$CROMITE_SHA
+ENV CROMITE_REPOSITORY=$CROMITE_REPOSITORY
 
 ARG HTTP_PROXY
 ENV HTTP_PROXY=$HTTP_PROXY
@@ -23,7 +25,7 @@ RUN sudo chmod +x ./apply-cromite-patches.sh && \
     mkdir cromite && \
     cd cromite && \
     git init && \
-    git remote add origin https://github.com/uazo/cromite && \
+    git remote add origin https://github.com/$CROMITE_REPOSITORY.git && \
     git fetch origin $CROMITE_SHA && \
     git reset --hard FETCH_HEAD && \
     cd ..
