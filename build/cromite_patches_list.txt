@@ -273,6 +273,7 @@ Override-the-MV2-deprecation.patch
 Remove-sideloading-of-version-dll.patch
 Use-browser-navigation-handler.patch
 Cromite-Branding--improve-settings-ui.patch
+Integrate-Cromite-Android-string-parts.patch
 Disable-Posture-API.patch
 PublicKeyCredential-fingerprinting-mitigations.patch
 Disable-Web-Bluetooth-by-default-in-desktop-platforms.patch
@@ -309,7 +310,6 @@ Reduce-input-capability-fingerprinting-through-normalization.patch
 Disable-Android-HDR.patch
 Protect-keyboard-geometry-on-Android.patch
 Allows-v8-to-be-build-in-non-debug-mode-while-Chromium-is-in-debug-mode.patch
-
 # temporary or wip patches
 Temp-disable-predictive-back-gesture.patch
 TEMP-Add-a-log-to-track-strange-behavior.patch
@@ -320,7 +320,6 @@ Block-leakage-of-urls-in-sandbox-iframes.patch
 Fix-chromium-build-bugs.patch
 Temp-use-PREVIEW-for-IDCompositionDevice5.patch
 Temp-Do-not-compress-devtools-frontend-resources-in-non-debug-mode.patch
-
 # adblock patches
 eyeo-133.0.6943.49-base.patch
 eyeo-133.0.6943.49-chrome_integration.patch
@@ -328,7 +327,6 @@ eyeo-133.0.6943.49-android_api.patch
 eyeo-133.0.6943.49-android_settings.patch
 eyeo-133.0.6943.49-extension_api.patch
 Eyeo-Adblock-for-Cromite.patch
-
 # extension patches
 Experimental-support-for-extensions-on-Android.patch
 Enable-extension-in-incognito.patch
