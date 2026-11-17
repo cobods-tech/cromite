@@ -10,10 +10,10 @@ both dimensions while preserving row-major reorder and existing callbacks.
 Auto-scroll remains disabled for the non-scrollable grid.
 
 ---
- chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java | 28 ++++++++++++++------
+ chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java | 34 ++++++++++++++++++++++------
  chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragSession.java | 27 +++++++++++++-----
  chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragDelegateImpl.java | 2 +-
- 3 files changed, 41 insertions(+), 16 deletions(-)
+ 3 files changed, 47 insertions(+), 16 deletions(-)
 
 diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java b/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java
 --- a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java
@@ -53,7 +53,7 @@ diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/til
          }
 @@ -68,12 +70,16 @@ public class TileMovement {
       * @return Index of the {@link #mTileViews} element whose position is nearest to ({@param x},
-      * {@param y}), {@param y}), preferring lower index on a tie.
+      * {@param y}), preferring lower index on a tie.
       */
 -    public int getIndexOfViewNearestTo(float x) {
 +    public int getIndexOfViewNearestTo(float x, float y) {
@@ -71,7 +71,7 @@ diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/til
              if (bestDist > dist) {
                  bestDist = dist;
                  bestIndex = i;
-@@ -89,11 +95,25 @@ public class TileMovement {
+@@ -89,11 +95,31 @@ public class TileMovement {
      public float getXLo() {
 -        return Math.min(mOriginalX.get(0), mOriginalX.get(mOriginalX.size() - 1));
 +        float min = Float.POSITIVE_INFINITY;
