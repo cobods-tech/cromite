@@ -10,10 +10,10 @@ both dimensions while preserving row-major reorder and existing callbacks.
 Auto-scroll remains disabled for the non-scrollable grid.
 
 ---
- chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java | 34 ++++++++++++++++++++++------
- chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragSession.java | 27 +++++++++++++-----
- chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragDelegateImpl.java | 2 +-
- 3 files changed, 47 insertions(+), 16 deletions(-)
+ chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java | 36 ++++++++++++++++++++++++++++---------
+ chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragSession.java | 19 +++++++++++++++---
+ chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragDelegateImpl.java | 1 +
+ 3 files changed, 56 insertions(+), 15 deletions(-)
 
 diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java b/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java
 --- a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java
