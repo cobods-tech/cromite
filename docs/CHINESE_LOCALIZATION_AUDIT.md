@@ -28,11 +28,11 @@ The Cromite settings patch adds a GRDP file with four custom section-title messa
 
 A further source audit found that the existing settings and first-run patches create GRDP fragments but do not add them to Chromium's parent `android_chrome_strings.grd`. A GRDP file is not compiled merely because it exists in the source tree: the parent GRD must include it with a `<part>` entry.
 
-A new patch, `Integrate-Cromite-Android-string-parts.patch`, now adds both:
+A new patch, `Integrate-Cromite-Android-string-parts.patch`, now adds both fragments at the **end** of the parent `<messages>` group, immediately before `</messages>`:
 - `cromite_android_chrome_strings_grd/Cromite-settings-ui.grdp`
 - `cromite_android_chrome_strings_grd/Welcome-screen.grdp`
 
-It is ordered after the patches that create those files. The hunk format and patch-list references have been checked, but the complete 329-patch series has not yet been applied to a Chromium checkout. The first actual build must confirm that GRIT accepts the integration and that no message IDs collide.
+It is ordered after the patches that create those files. The parts must be appended at the end of the existing messages group: inserting them at the beginning would change GRIT's sequential resource-ID allocation for existing Chromium strings and could invalidate upstream XTB mappings. The integration hunk was moved to the closing `</messages>` boundary for this reason. The hunk format and patch-list references have been checked, but the complete 329-patch series has not yet been applied to the exact Chromium 153.0.8010.37 checkout. The first actual build must confirm that the context applies, GRIT accepts the integration, and existing upstream message IDs remain unchanged.
 
 ## Cromite-specific English strings identified
 
