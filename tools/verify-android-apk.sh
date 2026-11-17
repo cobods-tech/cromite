@@ -3,7 +3,7 @@ set -Eeuo pipefail
 
 # Verify a Cromite Android APK before delivery.
 # Required: APK path. Optional: EXPECTED_PACKAGE, MIN_VERSION_CODE,
-# EXPECTED_CERT_SHA256, REQUIRE_ZH_CN, INSTALL_WITH_ADB.
+# EXPECTED_CERT_SHA256, REQUIRE_CERT_SHA256, REQUIRE_ZH_CN, INSTALL_WITH_ADB.
 #
 # Example:
 # EXPECTED_PACKAGE=org.cromite.cromite \
@@ -15,6 +15,7 @@ APK="${1:?Usage: $0 path/to/ChromePublic.apk}"
 EXPECTED_PACKAGE="${EXPECTED_PACKAGE:-org.cromite.cromite}"
 MIN_VERSION_CODE="${MIN_VERSION_CODE:-0}"
 EXPECTED_CERT_SHA256="${EXPECTED_CERT_SHA256:-}"
+REQUIRE_CERT_SHA256="${REQUIRE_CERT_SHA256:-0}"
 REQUIRE_ZH_CN="${REQUIRE_ZH_CN:-1}"
 INSTALL_WITH_ADB="${INSTALL_WITH_ADB:-0}"
 
@@ -26,6 +27,11 @@ for tool in apkanalyzer apksigner unzip sha256sum; do
 done
 
 [[ -f "$APK" ]] || { echo "ERROR: APK not found: $APK" >&2; exit 2; }
+
+if [[ "$REQUIRE_CERT_SHA256" == "1" && -z "$EXPECTED_CERT_SHA256" ]]; then
+  echo "ERROR: EXPECTED_CERT_SHA256 is required for release verification." >&2
+  exit 2
+fi
 
 PACKAGE="$(apkanalyzer manifest application-id "$APK")"
 VERSION_CODE="$(apkanalyzer manifest version-code "$APK")"
@@ -49,7 +55,9 @@ APK_SHA256="$(sha256sum "$APK" | awk '{print $1}')"
   exit 1
 }
 
-if [[ -n "$EXPECTED_CERT_SHA256" && "$CERT_SHA256" != "${EXPECTED_CERT_SHA256^^}" ]]; then
+EXPECTED_CERT_NORMALIZED="${EXPECTED_CERT_SHA256//:/}"
+CERT_SHA256_NORMALIZED="${CERT_SHA256//:/}"
+if [[ -n "$EXPECTED_CERT_SHA256" && "$CERT_SHA256_NORMALIZED" != "${EXPECTED_CERT_NORMALIZED^^}" ]]; then
   echo "ERROR: signing certificate mismatch." >&2
   echo "Expected: $EXPECTED_CERT_SHA256" >&2
   echo "Actual:   $CERT_SHA256" >&2
