@@ -1,0 +1,25 @@
+From: OpenAI
+Subject: [PATCH] Restore tile data lookup in simplified NTP grid
+
+The simplified grid still stores SuggestionsTileView instances as its tile
+children. Preserve the original drag/reorder delegate's ability to resolve
+a TileView back to its SiteSuggestion. This is required for reorder flows;
+it does not by itself re-enable drag auto-scroll or restore a scroll parent.
+
+---
+ chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragDelegateImpl.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragDelegateImpl.java b/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragDelegateImpl.java
+--- a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragDelegateImpl.java
++++ b/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragDelegateImpl.java
+@@ -276,7 +276,7 @@ class TileDragDelegateImpl implements TileDragDelegate, TileDragSession.Delegate
+ 
+     @Override
+     public SiteSuggestion getTileViewData(TileView view) {
+-        return null;
++        return ((SuggestionsTileView) view).getData();
+     }
+ 
+     @Override
+--
