@@ -11,7 +11,8 @@ translations without creating a new translation catalog.
 diff --git a/chrome/browser/ui/android/strings/android_chrome_strings.grd b/chrome/browser/ui/android/strings/android_chrome_strings.grd
 --- a/chrome/browser/ui/android/strings/android_chrome_strings.grd
 +++ b/chrome/browser/ui/android/strings/android_chrome_strings.grd
-@@ -203,1 +203,3 @@
- <messages fallback_to_english="true">
+@@ -4805,1 +4805,3 @@
+-</messages>
 +  <part file="cromite_android_chrome_strings_grd/Cromite-settings-ui.grdp" />
 +  <part file="cromite_android_chrome_strings_grd/Welcome-screen.grdp" />
++</messages>
