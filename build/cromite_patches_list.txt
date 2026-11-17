@@ -100,6 +100,7 @@ Hardening-against-incognito-mode-detection.patch
 Restore-Simplified-NTP-launch.patch
 Restore-NTP-custom-link-entry.patch
 Restore-NTP-tile-data-lookup.patch
+Make-NTP-tile-reordering-grid-aware.patch
 Add-option-to-use-home-page-as-NTP.patch
 Disable-text-fragments-by-default.patch
 disable-WebView-variations-support.patch
