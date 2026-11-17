@@ -24,6 +24,15 @@ Pinned Chromium baseline: `153.0.8010.37`.
 - `chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegateImpl.java`
 - `chrome/android/java/res/menu/main_menu.xml`
 
+## Cromite bottom-toolbar interaction
+
+`Move-navigation-bar-to-bottom.patch` already changes the app menu when the bottom-toolbar feature is enabled:
+
+- `AppMenu.java` uses `TRANSCRIPT_MODE_ALWAYS_SCROLL` and `setStackFromBottom(true)`.
+- The popup height and vertical anchor position are adjusted for the bottom-toolbar placement.
+- `AppMenuHandlerImpl.java` reverses the menu model order before displaying it.
+
+The two-page implementation must preserve these behaviors. In particular, do not reverse or reorder the model a second time without accounting for the existing reversal, or the visible page order and click/action mapping may become inconsistent.
 ## V1 implementation requirements
 
 1. Keep the existing model IDs and click-handler route for every original menu action.
