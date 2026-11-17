@@ -36,3 +36,23 @@ This document records the non-negotiable release checks for the Chinese UI build
 The repository's existing `.github/workflows/build_cromite.yaml` is manually dispatched and uses custom runner labels (`dev` / `ci`), custom container images, persistent build volumes, and repository secrets. Its input SHA is described as an upstream `uazo/cromite` SHA. The paired release workflow also checks out `uazo/cromite` and creates the release there, rather than publishing a fork-specific build. Neither workflow is a ready-made build path for this fork's custom branch until both are adapted and the required runner, artifact destination, and signing secrets are confirmed. The fork currently reports no workflow runs.
 
 No APK is considered delivered until all checks above have been completed.
+
+## Fork-specific build workflow update
+
+The fork's `.github/workflows/build_cromite.yaml` has been adjusted to:
+- Build the commit selected by the current workflow dispatch branch (`github.sha`) instead of requiring an upstream `uazo/cromite` SHA.
+- Pass `github.repository` into the Cromite source Docker build so the container fetches this fork's source and patch set.
+- Use the fork commit SHA for persistent build-cache directory names.
+- Default to Android arm64, which is the intended first APK target.
+- Calculate a SHA-256 checksum and upload the arm64 APK plus checksum as a GitHub Actions artifact.
+
+The source Dockerfile now accepts `CROMITE_REPOSITORY` and fetches the requested commit from that repository.
+
+## Remaining execution prerequisites
+
+These workflow changes are committed but have not been executed. The workflow still depends on the repository owner providing the infrastructure expected by the original project:
+- A working self-hosted GitHub Actions runner with the `ci` label (or selecting another configured label).
+- Docker, sufficient disk space, memory, and the persistent `/storage/images` mounts expected by the workflow.
+- Repository Actions secrets required by the existing build: `KEYSTORE`, `KEYSTORE_PASSPHRASE`, `KEYSTORE_PASSWORD`, and `CROMITE_PREF_HASH_SEED_BIN`.
+
+Do not start the workflow until the runner and signing secrets are confirmed. No build run or APK artifact has been produced by these commits.
