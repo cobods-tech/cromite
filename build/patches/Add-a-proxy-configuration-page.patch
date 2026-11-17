@@ -43,7 +43,7 @@ License: GPL-3.0-only - https://spdx.org/licenses/GPL-3.0-only.html
  net/proxy_resolution/pac_file_fetcher_impl.cc |   8 -
  net/proxy_resolution/proxy_config.cc          |  53 ++-
  net/proxy_resolution/proxy_config.h           |   3 +
- 27 files changed, 989 insertions(+), 26 deletions(-)
+ 28 files changed, 992 insertions(+), 26 deletions(-)
  create mode 100644 chrome/browser/resources/proxy_config.css
  create mode 100644 chrome/browser/resources/proxy_config.html
  create mode 100644 chrome/browser/resources/proxy_config.js
@@ -1441,3 +1441,13 @@ diff --git a/net/proxy_resolution/proxy_config.h b/net/proxy_resolution/proxy_co
      // Returns one of {&proxies_for_http, &proxies_for_https, &proxies_for_ftp,
      // &fallback_proxies}, or NULL if there is no proxy to use.
 --
+
+diff --git a/chrome/android/java/res/values-zh-rCN/cromite_proxy_strings.xml b/chrome/android/java/res/values-zh-rCN/cromite_proxy_strings.xml
+new file mode 100644
+--- /dev/null
++++ b/chrome/android/java/res/values-zh-rCN/cromite_proxy_strings.xml
+@@ -0,0 +1,3 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <string name="proxy_title">代理配置</string>
++</resources>
