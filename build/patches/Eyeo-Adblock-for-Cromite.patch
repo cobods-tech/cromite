@@ -262,34 +262,34 @@ diff --git a/chrome/browser/adblock/android/adblock_strings.grd b/chrome/browser
 -        Ad blocking
 +        Adblock Plus settings
 +      </message>
-+      <message name="IDS_ADBLOCK_SETTINGS_ENABLE" desc="">
++      <message name="IDS_ADBLOCK_SETTINGS_ENABLE" desc="Switch label for enabling or disabling Adblock Plus ad blocking in the browser.">
 +        Enable Adblock Plus
 +      </message>
-+      <message name="IDS_FRAGMENT_ADBLOCK_SETTINGS_START_UPDATE" desc="">
++      <message name="IDS_FRAGMENT_ADBLOCK_SETTINGS_START_UPDATE" desc="Button label that immediately checks for updated ad-blocking filter lists.">
 +        Check for updates now
 +      </message>
-+      <message name="IDS_ADBLOCK_SETTINGS_PRIVILEGED_FILTERS_ENABLED" desc="">
++      <message name="IDS_ADBLOCK_SETTINGS_PRIVILEGED_FILTERS_ENABLED" desc="Switch label for enabling anti-circumvention filters and Adblock Plus JavaScript snippets.">
 +        Enable anti-circumvention and snippets
 +      </message>
-+      <message name="IDS_ADBLOCK_SETTINGS_PRIVILEGED_FILTERS_ENABLED_SUMMARY" desc="">
++      <message name="IDS_ADBLOCK_SETTINGS_PRIVILEGED_FILTERS_ENABLED_SUMMARY" desc="Long explanation of the privileged filter/snippet feature, its website execution context, and the one permitted filter-list URL. Preserve the URL and the restriction meaning.">
 +        Snippets are pieces of JavaScript code, injected by the Adblock Plus, that execute within the context of a website and combat advanced ads that circumvent ordinary blocking.
 +The functionality is ONLY allowed for the list
 +https://uazo.github.io/cromite/filters/abp-filters-anti-cv.txt
 +which is activated by this setting.
 +      </message>
-+      <message name="IDS_ADBLOCK_SETTINGS_OPEN_REPO_URL_TEXT" desc="">
++      <message name="IDS_ADBLOCK_SETTINGS_OPEN_REPO_URL_TEXT" desc="Link or preference title that opens the repository for the anti-circumvention filter list.">
 +        Open ABP anti-circumvention filter list repo
 +      </message>
-+      <message name="IDS_ADBLOCK_SETTINGS_OPEN_REPO_URL_SUMMARY" desc="">
++      <message name="IDS_ADBLOCK_SETTINGS_OPEN_REPO_URL_SUMMARY" desc="Summary explaining that the anti-circumvention filter-list repository will open in the browser. Preserve the URL.">
 +        Open https://gitlab.com/eyeo/anti-cv/abp-filters-anti-cv in the browser
 +      </message>
 +      <message name="IDS_ADBLOCK_SETTINGS_OPEN_REPO_URL" desc="" translateable="false">
 +        https://gitlab.com/eyeo/anti-cv/abp-filters-anti-cv
 +      </message>
-+      <message name="IDS_ADBLOCK_SETTINGS_OPEN_SNIPPETS_URL_TEXT" desc="">
++      <message name="IDS_ADBLOCK_SETTINGS_OPEN_SNIPPETS_URL_TEXT" desc="Link or preference title that opens the Adblock Plus snippets documentation.">
 +        Open ABP Snippets Overview
 +      </message>
-+      <message name="IDS_ADBLOCK_SETTINGS_OPEN_SNIPPETS_URL_SUMMARY" desc="">
++      <message name="IDS_ADBLOCK_SETTINGS_OPEN_SNIPPETS_URL_SUMMARY" desc="Summary explaining that the Adblock Plus snippets documentation will open in the browser. Preserve the URL.">
 +        Open https://developers.eyeo.com/snippets/snippets-overview in the browser
 +      </message>
 +      <message name="IDS_ADBLOCK_SETTINGS_OPEN_SNIPPETS_URL" desc="" translateable="false">
