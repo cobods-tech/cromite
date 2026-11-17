@@ -22,7 +22,7 @@ The current patch list already applies:
 - `Cromite-Branding--improve-settings-ui.patch`
 - `Show-NTP-at-startup.patch`
 
-The Cromite settings patch adds a GRDP file with four custom section-title messages. These are Cromite-specific and are not covered by Chromium's pre-existing XTB entries.
+The Cromite settings patch adds a GRDP file with four custom section-title messages. The first-run patch adds three translatable messages plus four non-translatable URL messages. The bottom-toolbar and startup-page patches add four more translatable messages. These Cromite-specific messages are not covered by Chromium's pre-existing XTB entries.
 
 ## Cromite GRDP integration correction
 
@@ -32,11 +32,11 @@ A new patch, `Integrate-Cromite-Android-string-parts.patch`, now adds both:
 - `cromite_android_chrome_strings_grd/Cromite-settings-ui.grdp`
 - `cromite_android_chrome_strings_grd/Welcome-screen.grdp`
 
-It is ordered after the patches that create those files. The hunk format and patch-list references have been checked, but the complete 328-patch series has not yet been applied to a Chromium checkout. The first actual build must confirm that GRIT accepts the integration and that no message IDs collide.
+It is ordered after the patches that create those files. The hunk format and patch-list references have been checked, but the complete 329-patch series has not yet been applied to a Chromium checkout. The first actual build must confirm that GRIT accepts the integration and that no message IDs collide.
 
 ## Cromite-specific English strings identified
 
-The current patch set adds at least these eight user-facing English messages that need Simplified Chinese coverage:
+The current patch set adds 11 translatable user-facing English messages that need Simplified Chinese coverage. They come from three source areas: the bottom-toolbar patch (2), the startup-page patch (2), and the settings/first-run GRDP fragments (7):
 
 | Message ID | English source |
 |---|---|
@@ -52,7 +52,7 @@ The current patch set adds at least these eight user-facing English messages tha
 | `IDS_AUTO_UPDATER_CHECK` | Automatic checks for Bromite app updates |
 | `IDS_BROMITE_FRE_FOOTER_PRIVACY_POLICY` | First-run privacy-policy explanation with four link placeholders |
 
-These are not guaranteed to exist in Chromium's upstream zh-CN translation bundles because they are introduced by Cromite patches.
+These are not guaranteed to exist in Chromium's upstream zh-CN translation bundles because they are introduced by Cromite patches. The first-run fragment also defines four URL-valued messages (`IDS_PRIVACY_LINK1` through `IDS_PRIVACY_LINK4`) with `translateable="false"`; those are not Chinese UI copy and must remain URLs.
 
 ## GRIT requirements for custom strings
 
@@ -64,7 +64,7 @@ Chromium's localization guidance establishes that:
 
 Therefore, do not replace the English source text in the Cromite GRDP with Chinese. That would make Chinese the fallback source for every locale rather than a proper zh-CN translation. A previous experimental patch that did this was removed from the active patch list and deleted before any build.
 
-Before changing Cromite's four custom messages, verify the exact Chromium 153 parent GRD integration, generated message IDs, translation expectation entries, and XTB paths. Do not guess message IDs or create a speculative XTB file.
+Before adding translations, verify the exact Chromium 153 parent GRD integration, generated message IDs, the parent GRD's translation-expectation coverage, and XTB paths. Do not guess message IDs or create a speculative XTB file. The seven messages in the two GRDP fragments are only part of the 11-message inventory; toolbar and startup-page strings are defined elsewhere in the existing Android GRD.
 
 ## Package identity
 
