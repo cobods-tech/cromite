@@ -64,6 +64,22 @@ The pinned `AppMenuPropertiesDelegateImpl.java` source was fetched from the Chro
 
 This also corrects a potential implementation shortcut: the five-button `icon_row_menu_id` is only one action group, not the full menu. A full menu redesign must deliberately select which original action models are promoted into the two-page grid and which are retained as secondary rows, while preserving the page/overview/empty-state branches and dynamic state.
 
+## Concrete tabbed-browser menu owner located
+
+The concrete menu class is chrome/android/java/src/org/chromium/chrome/browser/tabbed_mode/TabbedAppMenuPropertiesDelegate.java (TabbedAppMenuPropertiesDelegate). It extends AppMenuPropertiesDelegateImpl and implements buildMenuModelList(). This is the relevant owner for the normal tabbed-browser menu; the earlier uncertainty about the subclass path is resolved.
+
+Its menu construction has three separate context branches:
+
+- populatePageModeMenu() for an active page.
+- populateOverviewModeMenu() for the tab overview.
+- populateTabletEmptyModeMenu() for the tablet with no tabs.
+
+The page menu starts with an existing five-action row (forward, bookmark, download, page info, reload), then constructs the remaining menu actions as individual model-backed entries. Examples include new tab, incognito tab, history, downloads, bookmarks, recent tabs, extensions, page zoom, share, print, find in page, translate, reader mode, settings, help, and conditional actions. The overview and empty-tablet menus have their own smaller action sets.
+
+**Implementation consequence:** the cleanest place to classify common and infrequent actions is the concrete TabbedAppMenuPropertiesDelegate page/overview/empty-state builders, while the generic app-menu handler/binder owns the reusable two-page grid presentation. Keep context-dependent conditions and existing model builders intact; move/repackage the resulting ListItem models only after they have been built. Preserve divider and custom view items (such as update and incognito entries) unless a deliberate compatible grid representation is added.
+
+The currently existing five-action row is not sufficient to satisfy the full two-page design. The first page should prioritize frequent actions and the second page should hold infrequent tools/settings; all original actions must remain reachable. A precise action-to-page mapping is still pending review against the full pinned TabbedAppMenuPropertiesDelegate.java and Cromite-specific additions before implementation.
+
 ## V1 implementation requirements
 
 1. Keep the existing model IDs and click-handler route for every original menu action.
