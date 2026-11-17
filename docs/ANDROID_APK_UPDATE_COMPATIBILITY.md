@@ -56,3 +56,10 @@ These workflow changes are committed but have not been executed. The workflow st
 - Repository Actions secrets required by the existing build: `KEYSTORE`, `KEYSTORE_PASSPHRASE`, `KEYSTORE_PASSWORD`, and `CROMITE_PREF_HASH_SEED_BIN`.
 
 Do not start the workflow until the runner and signing secrets are confirmed. No build run or APK artifact has been produced by these commits.
+
+
+## Android versionCode continuity
+
+The Android arm64 build step now adjusts the checked-out Chromium `chrome/VERSION` PATCH field before GN generation. It selects a patch value greater than the source PATCH and based on the GitHub Actions workflow run number. Chromium derives Android version codes from the BUILD/PATCH components, so this makes successive builds from the same Chromium BUILD line installable as upgrades rather than reusing an identical versionCode.
+
+This mechanism is a build-time safeguard, not yet a verified release guarantee. It must be checked against the first real APK's manifest and then against the next build's manifest. The workflow fails if the computed PATCH exceeds 999. Never deliver an update unless its actual package name, signing certificate, and versionCode have been compared with the installed APK.
