@@ -208,6 +208,30 @@ jobs:
           PATH=$WORKSPACE/chromium/src/third_party/llvm-build/Release+Asserts/bin:$WORKSPACE/depot_tools/:/usr/local/go/bin:$WORKSPACE/mtool/bin:$PATH
           cd $WORKSPACE
 
+          # Give each delivered build a strictly increasing Android versionCode.
+          # Chromium derives Android versionCode from chrome/VERSION's BUILD and PATCH.
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+
+          version_file = Path(os.environ["WORKSPACE"]) / "chromium/src/chrome/VERSION"
+          values = {}
+          for line in version_file.read_text().splitlines():
+              if "=" in line:
+                  key, value = line.split("=", 1)
+                  values[key.strip()] = value.strip()
+
+          current_patch = int(values["PATCH"])
+          run_number = int(os.environ["GITHUB_RUN_NUMBER"])
+          next_patch = max(current_patch + 1, 100 + run_number)
+          if next_patch > 999:
+              raise SystemExit(f"Android PATCH {next_patch} exceeds the three-digit version-code field")
+
+          values["PATCH"] = str(next_patch)
+          version_file.write_text("".join(f"{key}={value}\\n" for key, value in values.items()))
+          print(f"Android package version: {values['MAJOR']}.{values['MINOR']}.{values['BUILD']}.{next_patch}")
+          PY
+
           # reset proxy env
           HTTP_PROXY=
           HTTPS_PROXY=
