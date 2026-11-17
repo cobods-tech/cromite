@@ -10,8 +10,8 @@ License: GPL-2.0-or-later - https://spdx.org/licenses/GPL-2.0-or-later.html
  .../android/java/res/xml/main_preferences.xml |   4 +-
  .../res/xml/privacy_preferences_cromite.xml   | 191 ++++++++++++++++++
  .../privacy/settings/PrivacySettings.java     |   6 +-
- .../Cromite-settings-ui.grdp                  |  15 ++
- 5 files changed, 213 insertions(+), 5 deletions(-)
+ .../Cromite-settings-ui.grdp                  |  18 +++
+ 5 files changed, 216 insertions(+), 5 deletions(-)
  create mode 100644 chrome/android/java/res/xml/privacy_preferences_cromite.xml
  create mode 100644 chrome/browser/ui/android/strings/cromite_android_chrome_strings_grd/Cromite-settings-ui.grdp
 
@@ -270,9 +270,12 @@ diff --git a/chrome/browser/ui/android/strings/cromite_android_chrome_strings_gr
 new file mode 100644
 --- /dev/null
 +++ b/chrome/browser/ui/android/strings/cromite_android_chrome_strings_grd/Cromite-settings-ui.grdp
-@@ -0,0 +1,15 @@
+@@ -0,0 +1,18 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<grit-part>
++    <message name="IDS_CROMITE_CONTENT_SETTINGS_TITLE" desc="Heading for the group of website content and permission settings added by Cromite.">
++        Cromite content settings
++    </message>
 +    <message name="IDS_BROWSING_DATA_SECTION_TITLE" desc="Heading for the group of settings that control browsing history, cached files, and other locally stored browsing data.">
 +        Browsing data
 +    </message>
