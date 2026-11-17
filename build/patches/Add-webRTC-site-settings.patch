@@ -133,7 +133,7 @@ new file mode 100644
 +    webRTC
 +  </message>
 +  <message name="IDS_SETTINGS_SITE_SETTINGS_WEBRTC_DESCRIPTION" desc="Description of the WebRTC content setting." formatter_data="android_java">
-+    启用 WebRTC（一种用于实时通信和点对点连接的 JavaScript API）
++    Enable WebRTC, a JavaScript API for real-time communication and direct peer-to-peer communication
 +  </message>
 +  <message name="IDS_WEBRTC_PERMISSION_TITLE" desc="Title of the permission to use webrtc [CHAR-LIMIT=32]" formatter_data="android_java">
 +    WebRTC
@@ -145,10 +145,10 @@ new file mode 100644
 +    已停用
 +  </message>
 +  <message name="IDS_SETTINGS_SITE_SETTINGS_WEBRTC_ALLOWED_EXCEPTIONS" desc="Label for the allowed exceptions site list of the WebRTC setting.">
-+    允许使用 WebRTC
++    Allowed to use WebRTC
 +  </message>
 +  <message name="IDS_SETTINGS_SITE_SETTINGS_WEBRTC_BLOCKED_EXCEPTIONS" desc="Label for the blocked exceptions site list of the WebRTC setting.">
-+    不允许使用 WebRTC
++    Not allowed to use WebRTC
 +  </message>
 +</grit-part>
 diff --git a/components/content_settings/core/browser/bromite_content_settings/webrtc.inc b/components/content_settings/core/browser/bromite_content_settings/webrtc.inc
