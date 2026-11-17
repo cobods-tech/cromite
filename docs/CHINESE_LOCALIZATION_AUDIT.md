@@ -127,3 +127,9 @@ Updater menu labels previously displayed 'Update Bromite' and 'Restart Bromite';
 ### Remaining scope
 
 Custom GRIT messages are not yet translated into zh-CN because their numeric message IDs have not been generated from the pinned Chromium source. The proxy menu entry is one Android-resource exception already given a zh-CN override. The patch-wide scan is still targeted rather than exhaustive, and the complete source checkout/build has not been run.
+
+### Other GRIT catalogs
+
+The experimental user-scripts patch adds components/user_scripts/strings/userscripts_strings.grdp and explicitly includes it from components/components_strings.grd. This is already wired to its parent catalog; its translations belong to the components strings zh-CN XTB rather than the Android Chrome strings XTB. Its 11 messages include user-script settings, enable/disable labels, add/view-source actions, metadata labels, an installation confirmation with a FILE placeholder, and a security warning.
+
+The Adblock Plus Android patch adds strings to chrome/browser/adblock/android/adblock_strings.grd, while the Eyeo patch also modifies the existing components/error_page_strings.grdp. These belong to separate GRIT catalogs and must be audited against their own zh-CN outputs/translation expectations; they must not be incorrectly appended to the Android Chrome GRD.
