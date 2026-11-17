@@ -71,8 +71,22 @@ diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/til
              if (bestDist > dist) {
                  bestDist = dist;
                  bestIndex = i;
-@@ -99,6 +103,16 @@ public class TileMovement {
-         return Math.max(mOriginalX.get(0), mOriginalX.get(mOriginalX.size() - 1));
+@@ -89,10 +93,23 @@ public class TileMovement {
+     public float getXLo() {
+-        return Math.min(mOriginalX.get(0), mOriginalX.get(mOriginalX.size() - 1));
++        float min = Float.POSITIVE_INFINITY;
++        for (float x : mOriginalX) min = Math.min(min, x);
++        return min;
+     }
+ 
+     /**
+      * @return The maximum X-coordinate among managed tiles.
+      */
+     public float getXHi() {
+-        return Math.max(mOriginalX.get(0), mOriginalX.get(mOriginalX.size() - 1));
++        float max = Float.NEGATIVE_INFINITY;
++        for (float x : mOriginalX) max = Math.max(max, x);
++        return max;
      }
  
 +    /** @return The minimum Y-coordinate among managed tiles. */
