@@ -77,9 +77,9 @@ The patch adapts the original one-dimensional drag model to the simplified row-m
 - Capture each tile's original X and Y coordinates.
 - Select the drop target by squared Euclidean distance in both axes.
 - Animate shifted background tiles to both their original X and Y positions.
-- Move the active tile in both axes and constrain it to the actual grid bounds. X bounds scan every tile, which is important when the final row is incomplete.
+- Move the active tile in both axes and constrain it to the actual grid bounds. Both X and Y bounds scan every tile, rather than relying on the first/last tile positions; this also handles incomplete final rows and non-uniform row geometry.
 - Keep the existing `SiteSuggestion` callback and reorder acceptance flow; auto-scroll remains disabled because the grid has no horizontal scroll parent.
 
-**Validation status:** This is a source patch authored against the Chromium implementation inspected from upstream source references, not yet applied with `git am` to a full Chromium 153.0.8010.37 checkout. Its unified-diff hunk counts and patch-list entry were checked, but exact-context application, Java compilation, UI drag tests (LTR/RTL, partial last row, 1–4 rows), and actual APK build remain pending. Do not describe drag sorting as verified until those checks pass.
+**Validation status:** This is a source patch authored against the Chromium implementation inspected from upstream source references, not yet applied with `git am` to a full Chromium 153.0.8010.37 checkout. Its unified-diff hunk counts were rechecked after hardening both-axis bounds to scan every tile; the patch-list entry remains in place. Exact-context application, Java compilation, UI drag tests (LTR/RTL, partial last row, 1–4 rows), and actual APK build remain pending. Do not describe drag sorting as verified until those checks pass.
 
 Upstream source references used to establish the original one-axis assumptions: `TileMovement` stores X positions and moves via X only; `TileDragSession` clamps and selects the target using X. See Chromium source pages cited in the project discussion.
