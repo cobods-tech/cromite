@@ -52,8 +52,8 @@ diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/til
              mAnimators.add(null);
          }
 @@ -68,12 +70,16 @@ public class TileMovement {
-      * @return Index of the {@link #mTileViews} element whose X-coordinate is nearest to {@param x},
-      * preferring lower index on a tie.
+      * @return Index of the {@link #mTileViews} element whose position is nearest to ({@param x},
+      * {@param y}), preferring lower index on a tie.
       */
 -    public int getIndexOfViewNearestTo(float x) {
 +    public int getIndexOfViewNearestTo(float x, float y) {
