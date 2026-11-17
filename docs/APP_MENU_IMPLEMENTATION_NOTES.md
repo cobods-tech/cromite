@@ -258,3 +258,26 @@ Therefore:
 - Do not alter the existing popup anchor, popup offset calculations, transcript/stack-from-bottom behavior, or the popupHeight - 1 adjustment as part of the grid work.
 
 This audit is based on the actual Cromite patch file, not an assumption about stock Chromium. The paged-grid patch should be designed around this existing reversal rather than introducing a second ordering mechanism.
+
+
+## Exact pinned handler reinspection — child click dispatch resolved (2026-11-18)
+
+The exact Chromium 153.0.8010.37 `AppMenuHandlerImpl.java` was retrieved from the pinned Chromium commit `b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b`. This resolves the earlier uncertainty about child action click wiring.
+
+Verified behavior in that exact source:
+
+1. `showAppMenu()` obtains the delegate's `ModelList`, calls `setupModelForHighlightAndClick(mModelList, mHighlightMenuId, this)`, then registers the default binders and calls `mDelegate.registerCustomViewBinders(...)`.
+2. `setupModelForHighlightAndClick()` calls `updateModelForHighlightAndClick()` with `startIndex = 0` and `withAssertions = true`.
+3. The helper iterates each `ListItem`. If a model contains `CLICK_HANDLER`, it assigns the existing `AppMenuClickHandler`; if it contains `POSITION`, it updates the position; and it sets `HIGHLIGHTED` when a highlighted ID is supplied.
+4. Crucially, recursion into `ADDITIONAL_ICONS` is **outside** the `highlightedId != null` conditional. Child action models therefore receive their click handler even when no menu item is highlighted. The earlier warning that child handlers might only be assigned when an item is highlighted was incorrect for the pinned version and is withdrawn.
+5. `onItemClick()` checks the child model's `ENABLED` property, reads its own `MENU_ITEM_ID`, dismisses the menu, and dispatches through `mAppMenuDelegate.onOptionsItemSelected(itemId, mDelegate.getBundleForMenuItem(model), triggeringMotion)`. This is the action route the grid must retain.
+
+### Grid binder consequence
+
+A single custom grid row can safely retain the original action child `PropertyModel` objects in `ADDITIONAL_ICONS`, provided each child model contains the standard app-menu keys (including `CLICK_HANDLER`, `MENU_ITEM_ID`, `ENABLED`, `TITLE`, and icon data). The generic handler will attach the click handler recursively. The new binder must invoke the child's existing click handler with that exact child model; it must not construct its own activity callback or substitute a parent menu ID.
+
+The custom binder must still support ten cells (two five-column pages), hide unused cells, bind current model values, and preserve accessibility and long-press behavior. It must not assume the stock five-button binder itself supports ten children.
+
+### Remaining source checks
+
+The exact pinned `AppMenuHandlerImpl.java` click-dispatch path is now verified. The exact pinned `AppMenuItemViewBinder.java` still needs a separate focused read to confirm the standard button setup details and the correct way to invoke click/long-click from the custom binder. Do not infer private method visibility or binder reuse from a newer Chromium version. The custom grid patch is not yet written.
