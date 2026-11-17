@@ -228,7 +228,7 @@ jobs:
               raise SystemExit(f"Android PATCH {next_patch} exceeds the three-digit version-code field")
 
           values["PATCH"] = str(next_patch)
-          version_file.write_text("".join(f"{key}={value}\\n" for key, value in values.items()))
+          version_file.write_text("".join(f"{key}={value}\n" for key, value in values.items()))
           print(f"Android package version: {values['MAJOR']}.{values['MINOR']}.{values['BUILD']}.{next_patch}")
           PY
 
