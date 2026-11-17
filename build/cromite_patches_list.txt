@@ -330,3 +330,4 @@ Eyeo-Adblock-for-Cromite.patch
 Experimental-support-for-extensions-on-Android.patch
 Enable-extension-in-incognito.patch
 Integrate-Cromite-Android-string-parts.patch
+Restore-help-entry-in-android-app-menu.patch
