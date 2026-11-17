@@ -22,7 +22,7 @@ The current patch list already applies:
 - `Cromite-Branding--improve-settings-ui.patch`
 - `Show-NTP-at-startup.patch`
 
-The Cromite settings patch adds a GRDP file with four custom section-title messages. The first-run patch adds three translatable messages plus four non-translatable URL messages. The bottom-toolbar and startup-page patches add four more translatable messages. These Cromite-specific messages are not covered by Chromium's pre-existing XTB entries.
+The Cromite settings patch adds a GRDP file with four custom section-title messages; their previously empty translator descriptions have now been filled in with context. The first-run patch adds three translatable messages plus four non-translatable URL messages; the automatic-updater label now correctly uses the Cromite brand rather than the inherited Bromite name. The bottom-toolbar and startup-page patches add four more translatable messages. These Cromite-specific messages are not covered by Chromium's pre-existing XTB entries.
 
 ## Cromite GRDP integration correction
 
@@ -49,7 +49,7 @@ An initial targeted review of the bottom-toolbar, startup-page, settings, and fi
 | `IDS_INCOGNITO_RELATED_SECTION_TITLE` | Incognito mode |
 | `IDS_DATA_EXPOSED_TO_DEVICE_SECTION_TITLE` | Data exposed in the device |
 | `IDS_FRE_CONTINUE` | Continue |
-| `IDS_AUTO_UPDATER_CHECK` | Automatic checks for Bromite app updates |
+| `IDS_AUTO_UPDATER_CHECK` | Automatically check for Cromite app updates |
 | `IDS_BROMITE_FRE_FOOTER_PRIVACY_POLICY` | First-run privacy-policy explanation with four link placeholders |
 
 These are not guaranteed to exist in Chromium's upstream zh-CN translation bundles because they are introduced by Cromite patches. The first-run fragment also defines four URL-valued messages (`IDS_PRIVACY_LINK1` through `IDS_PRIVACY_LINK4`) with `translateable="false"`; those are not Chinese UI copy and must remain URLs.
