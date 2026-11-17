@@ -26,11 +26,13 @@ The Cromite settings patch adds a GRDP file with four custom section-title messa
 
 ## Cromite GRDP integration correction
 
-A further source audit found that the existing settings and first-run patches create GRDP fragments but do not add them to Chromium's parent `android_chrome_strings.grd`. A GRDP file is not compiled merely because it exists in the source tree: the parent GRD must include it with a `<part>` entry.
+A further source audit found that the settings, first-run, and Android extension patches create Cromite-specific GRDP fragments but do not add them to Chromium's parent `android_chrome_strings.grd`. A GRDP file is not compiled merely because it exists in the source tree: the parent GRD must include it with a `<part>` entry.
 
-A new patch, `Integrate-Cromite-Android-string-parts.patch`, now adds both fragments at the **end** of the parent `<messages>` group, immediately before `</messages>`:
+A new patch, `Integrate-Cromite-Android-string-parts.patch`, now adds all four Android fragments at the **end** of the parent `<messages>` group, immediately before `</messages>`:
 - `cromite_android_chrome_strings_grd/Cromite-settings-ui.grdp`
 - `cromite_android_chrome_strings_grd/Welcome-screen.grdp`
+- `cromite_android_chrome_strings_grd/Enable-extensions-Android.grdp`
+- `cromite_android_chrome_strings_grd/Extensions-Android.grdp`
 
 It is ordered after the patches that create those files. The parts must be appended at the end of the existing messages group: inserting them at the beginning would change GRIT's sequential resource-ID allocation for existing Chromium strings and could invalidate upstream XTB mappings. The integration hunk was moved to the closing `</messages>` boundary for this reason. The hunk format and patch-list references have been checked, but the complete 329-patch series has not yet been applied to the exact Chromium 153.0.8010.37 checkout. The first actual build must confirm that the context applies, GRIT accepts the integration, and existing upstream message IDs remain unchanged.
 
@@ -67,7 +69,7 @@ Chromium's localization guidance establishes that:
 
 Therefore, do not replace the English source text in the Cromite GRDP with Chinese. That would make Chinese the fallback source for every locale rather than a proper zh-CN translation. A previous experimental patch that did this was removed from the active patch list and deleted before any build.
 
-Before adding translations, complete the patch-wide UI-string inventory, then verify the exact Chromium 153 parent GRD integration, generated message IDs, the parent GRD's translation-expectation coverage, and XTB paths. Do not guess message IDs or create a speculative XTB file. The eight messages in the two GRDP fragments are only part of the initial 12-message subset; toolbar and startup-page strings are defined elsewhere in the existing Android GRD.
+Before adding translations, complete the patch-wide UI-string inventory, then verify the exact Chromium 153 parent GRD integration, generated message IDs, the parent GRD's translation-expectation coverage, and XTB paths. Do not guess message IDs or create a speculative XTB file. The eight messages in the original settings and first-run GRDP fragments are only part of the initial 12-message subset; the two extension GRDP fragments add six more messages, and toolbar/startup-page strings are defined elsewhere in the existing Android GRD.
 
 ## Package identity
 
