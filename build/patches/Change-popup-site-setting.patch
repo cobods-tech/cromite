@@ -270,19 +270,19 @@ new file mode 100644
 +<?xml version="1.0" encoding="utf-8"?>
 +<grit-part>
 +  <message name="IDS_WEBSITE_SETTINGS_CATEGORY_POPUP" desc="" formatter_data="android_java">
-+    Block sites from showing pop-ups and redirects
++    阻止网站显示弹出式窗口和重定向
 +  </message>
 +  <message name="IDS_WEBSITE_SETTINGS_CATEGORY_POPUP_DESCRIPTION" desc="" formatter_data="android_java">
 +    When on, sites can use pop-ups and redirects. When off, sites can’t use pop-ups and redirects.
 +  </message>
 +  <message name="IDS_WEBSITE_SETTINGS_CATEGORY_POPUP_BLOCK_ALL" desc="" formatter_data="android_java">
-+    Block all popups
++    阻止所有弹出式窗口
 +  </message>
 +  <message name="IDS_WEBSITE_SETTINGS_CATEGORY_POPUP_ALLOWED" desc="" formatter_data="android_java">
-+    Allows popups
++    允许弹出式窗口
 +  </message>
 +  <message name="IDS_WEBSITE_SETTINGS_CATEGORY_POPUP_BLOCKED" desc="" formatter_data="android_java">
-+    Block some popups
++    阻止部分弹出式窗口
 +  </message>
 +</grit-part>
 diff --git a/components/content_settings/core/browser/bromite_content_settings/popups.inc b/components/content_settings/core/browser/bromite_content_settings/popups.inc
