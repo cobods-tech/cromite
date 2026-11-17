@@ -33,6 +33,19 @@ Pinned Chromium baseline: `153.0.8010.37`.
 - `AppMenuHandlerImpl.java` reverses the menu model order before displaying it.
 
 The two-page implementation must preserve these behaviors. In particular, do not reverse or reorder the model a second time without accounting for the existing reversal, or the visible page order and click/action mapping may become inconsistent.
+## Concrete button binding behavior in Chromium 153
+
+The pinned 153.0.8010.37 `AppMenuItemViewBinder.java` was inspected directly:
+
+- `bindIconRowItem()` reads the `ADDITIONAL_ICONS` model list and binds up to five `MaterialButton` views.
+- Each child model is passed to `setupMenuButton()`, which sets enabled/focusable state, uses `TITLE_CONDENSED` as the accessibility content description, and dispatches click and long-click through the existing `AppMenuClickHandler`.
+- `AppMenuHandlerImpl.setupModelForHighlightAndClick()` assigns the click handler to the parent row and recursively assigns it to the row's `ADDITIONAL_ICONS` child models.
+- The existing `icon_row_menu_item.xml` layout is registered for the three-, four-, and five-button row view types in the app-menu adapter.
+- `AppMenuItemProperties.ADDITIONAL_ICONS` is therefore the existing child-model mechanism for action buttons; the standard row binder's five-view limit is the specific reason a new paged view type/binder is needed for ten visible actions.
+
+Implementation consequence: the new two-page cell view should consume the existing child `PropertyModel` objects (not create unrelated click callbacks), display `TITLE` beneath each icon, preserve `TITLE_CONDENSED` for accessibility, and call the same `AppMenuClickHandler` for taps/long presses. It must also hide unused cells and respect each child's `ENABLED`, `CHECKED`, and `HIGHLIGHTED` values.
+
+Source files checked against the pinned 153.0.8010.37 GitHub raw tree: `AppMenuItemViewBinder.java` and `chrome/browser/ui/android/appmenu/internal/BUILD.gn`. The latter explicitly lists the Java sources and XML resources that must be extended when adding a new binder/layout.
 ## V1 implementation requirements
 
 1. Keep the existing model IDs and click-handler route for every original menu action.
