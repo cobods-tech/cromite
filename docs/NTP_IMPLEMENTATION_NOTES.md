@@ -36,6 +36,12 @@ A follow-up patch, `build/patches/Restore-NTP-custom-link-entry.patch`, now rest
 
 The follow-up is listed immediately after `Restore-Simplified-NTP-launch.patch`, so it applies after the line it restores. This is a narrow source-level restoration; it has not yet been applied with `git am` to a full Chromium 153.0.8010.37 checkout or compiled. Tile drag/reorder and auto-scroll remain unresolved because the grid intentionally has no horizontal scroll container and its drag delegate currently returns null for tile data/outer view.
 
+## Tile data lookup restoration
+
+A second narrow follow-up, `build/patches/Restore-NTP-tile-data-lookup.patch`, restores `TileDragDelegateImpl.getTileViewData()` by returning `((SuggestionsTileView) view).getData()`. This matches the original `MostVisitedTilesLayout.getTileViewData()` implementation and the simplified grid still renders `SuggestionsTileView` children. The patch is listed after the simplified NTP patch and custom-link restoration.
+
+This restores the view-to-`SiteSuggestion` lookup needed by reorder logic, but it does **not** restore the full drag interaction: `isAutoScrollEnabled()` remains false and `getOuterView()` still returns null because the grid is not backed by the original horizontal scroll container. Full touch drag/reorder remains unverified and must not be described as restored.
+
 ## Implementation boundaries
 
 - Keep Chromium's existing NTP search box and navigation delegate; do not create a parallel search implementation.
