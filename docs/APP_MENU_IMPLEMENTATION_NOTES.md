@@ -231,3 +231,30 @@ The current Android build workflow edits the checked-out Chromium `chrome/VERSIO
 It rejects values above 999. This preserves a strictly increasing PATCH value across builds on a persistent workspace and also advances with GitHub Actions run numbers. The APK verifier separately rejects a non-numeric or non-positive versionCode and can enforce a supplied minimum. It does not independently query a previously released APK; the monotonicity guarantee therefore depends on this workflow's version-generation step remaining in the release path.
 
 No changes to the menu implementation source have been made in this pass. Exact pinned `AppMenuHandlerImpl.java` and `AppMenuItemViewBinder.java` retrieval was temporarily blocked by GitHub API rate limiting, so the previously identified child-click-handler safety condition remains unresolved. Do not write the custom grid binder until that exact-version dispatch path can be verified.
+
+
+## Additional Cromite menu actions and bottom-toolbar reversal audit
+
+The active patch files were inspected for actions beyond stock Chromium:
+
+- Add-menu-item-to-view-source.patch inserts View source into both ordinary page-menu construction paths and gives it R.id.view_source_id; the existing activity action handler loads the view-source: URL. It is conditional on a non-empty URL that is not already a view-source URL.
+- Add-menu-item-to-bookmark-all-tabs.patch inserts Bookmark all tabs in the ordinary page menu and tab-overview menu. It uses R.id.bookmark_all_tabs_menu_id; the action handler bookmarks eligible tabs and shows a snackbar.
+- Add-exit-menu-item.patch adds Exit to both ordinary page-menu paths, as recorded above.
+- The Help restoration patch is applied at the end of the patch list, after the original Help-removal patch.
+
+These additions mean the grid cannot use a hard-coded stock Chromium action array. It must preserve unknown/custom menu IDs and their original PropertyModel instances, so View source, Bookmark all tabs, Exit, update rows, and future Cromite actions remain functional.
+
+### Important: bottom-toolbar reversal happens in the generic handler
+
+The exact Cromite patch Move-navigation-bar-to-bottom.patch modifies AppMenuHandlerImpl.showAppMenu(): after obtaining mModelList = mDelegate.getMenuItems(), it creates a reversed ModelList by repeatedly inserting each original item at index zero when sMoveTopToolbarToBottom is enabled. The patch also changes AppMenu.java popup height/positioning and scroll anchoring for the bottom-toolbar mode.
+
+Therefore:
+
+- The page delegate returns its normal logical menu order.
+- The generic handler reverses the top-level list once for bottom-toolbar mode.
+- A paged-grid implementation must not reverse either page's items again.
+- If the grid is inserted after this reversal, page classification must be based on stable menu IDs, not list indices.
+- If the grid is inserted before this reversal, the wrapper item itself will be reversed with the list; the implementation must explicitly account for that so the grid remains in the intended position.
+- Do not alter the existing popup anchor, popup offset calculations, transcript/stack-from-bottom behavior, or the popupHeight - 1 adjustment as part of the grid work.
+
+This audit is based on the actual Cromite patch file, not an assumption about stock Chromium. The paged-grid patch should be designed around this existing reversal rather than introducing a second ordering mechanism.
