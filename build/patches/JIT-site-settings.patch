@@ -244,7 +244,7 @@ new file mode 100644
 +    JavaScript 即时编译
 +  </message>
 +  <message name="IDS_SETTINGS_SITE_SETTINGS_JAVASCRIPT_JIT_DESCRIPTION_CROMITE" desc="Description of the Javascript JIT content setting." formatter_data="android_java">
-+    Enable the JIT compiler and WebAssembly support in V8
++    启用 V8 的即时编译（JIT）和 WebAssembly 支持
 +  </message>
 +  <message name="IDS_WEBSITE_SETTINGS_CATEGORY_JAVASCRIPT_JIT_ENABLED" desc="Summary text explaining that sites are allowed to compile JavaScript in JIT mode." formatter_data="android_java">
 +    允许 JIT 和 WebAssembly
