@@ -498,7 +498,7 @@ jobs:
 
           # Android SDK tools may be installed outside the container's default PATH.
           # Prefer configured SDK roots, then check common image locations.
-          for sdk_root in "${ANDROID_SDK_ROOT:-}" "${ANDROID_HOME:-}" /opt/android-sdk /usr/lib/android-sdk /home/lg/Android/Sdk; do
+          for sdk_root in "${ANDROID_SDK_ROOT:-}" "${ANDROID_HOME:-}" "$WORKSPACE/chromium/src/third_party/android_sdk/public" /opt/android-sdk /usr/lib/android-sdk /home/lg/Android/Sdk; do
             if [[ -n "$sdk_root" && -d "$sdk_root" ]]; then
               while IFS= read -r tool_dir; do
                 case "$tool_dir" in
