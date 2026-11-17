@@ -98,6 +98,7 @@ Remove-blocklisted-URLs-upon-bookmark-creation.patch
 Disable-the-DIAL-repeating-discovery.patch
 Hardening-against-incognito-mode-detection.patch
 Restore-Simplified-NTP-launch.patch
+Restore-NTP-custom-link-entry.patch
 Add-option-to-use-home-page-as-NTP.patch
 Disable-text-fragments-by-default.patch
 disable-WebView-variations-support.patch
