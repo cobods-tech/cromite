@@ -1284,8 +1284,8 @@ new file mode 100644
 +    <message name="IDS_FRE_CONTINUE" desc="Text for first page accept and continue button [CHAR_LIMIT=20]">
 +        Continue
 +    </message>
-+    <message name="IDS_AUTO_UPDATER_CHECK" desc="Message for the checkbox for automatic Bromite updates">
-+        Automatic checks for Bromite app updates
++    <message name="IDS_AUTO_UPDATER_CHECK" desc="Checkbox label that lets the user enable or disable automatic updates for the Cromite browser app.">
++        Automatically check for Cromite app updates
 +    </message>
 +
 +    <message name="IDS_BROMITE_FRE_FOOTER_PRIVACY_POLICY" desc="Message explaining the privacy policy of the file hosting service provider for adblock updates and Bromite app automatic updates">
