@@ -133,3 +133,62 @@ This cross-check is from a newer upstream source revision and is **not proof** o
 - whether the existing five-button row relies on a separate binding/click path that the new view must preserve.
 
 If the pinned implementation has the same conditional assignment, the new binder must not work around it by inventing direct menu callbacks. Instead, make the smallest generic handler change that assigns the existing `AppMenuClickHandler` and any required position/highlight state to every child action model, then test normal, incognito, overview, and bottom-toolbar menu opening. This is a potential dead-button failure and is a release blocker until tested.
+
+
+## Exact pinned-source menu inventory (Chromium 153.0.8010.37)
+
+The concrete menu owner was fetched from the exact Chromium tag `153.0.8010.37` during this review (source blob `e4548b2f1ae1f16bec004f318d62852bb724f0fe`). This confirms the menu composition and the context branches rather than relying on current Chromium main.
+
+### Active page, without Chromium submenus
+
+The page menu is built in `populatePageModeMenuWithoutSubmenus()`. Its model list can contain:
+
+- Existing action row: Back (feature-dependent), Forward, Bookmark, Download, Page info (when the back-button experiment is off), Reload/Stop.
+- Update custom row (conditional).
+- New tab, New incognito tab, Add to group, New window, New incognito window, Move to other window, Manage windows.
+- History, Quick delete, Page info, Homepage, Downloads, Bookmarks, Recent tabs, Extensions.
+- Page zoom, Share, Download page, Print, Price tracking, Glic, Find in page, Lens, Translate, Read aloud, Reader mode, Open with, Add to Home screen, Open in app, Request desktop site, Auto Dark, Paint preview, Image descriptions, Listen to Feed.
+- Settings, NTP customizations, Help, Managed by, supervised-content help, and default-browser promotion.
+
+Many entries are conditional on the current URL, tab, incognito state, device form factor, feature flags, or installed capabilities. The redesigned menu must rearrange existing `ListItem` models after these conditions have been evaluated; it must not recreate a simplified static list.
+
+### Active page, with Chromium submenus
+
+When `isSubmenusEnabled()` is true, the page menu instead groups several actions under parents:
+
+- Tab groups; History and autofill; Bookmarks; Extensions; Passwords and autofill; Save and share; More tools; Help.
+- Standalone actions still include new tab/incognito, window management, quick delete, homepage, downloads, page zoom, Glic, print, price tracking, find, Lens, translate, open with, open in app, Request desktop site, Auto Dark, image descriptions, Listen to Feed, Settings, managed-by/help-for-supervised-content, and default-browser promotion.
+
+Do not flatten or discard these submenu children. The V1 two-page menu must either preserve the existing submenu rows or keep their parent models reachable on the secondary page.
+
+### Overview and empty-tablet contexts
+
+- Tab overview: New tab, New incognito tab, optional new windows, new tab group, Close all tabs, optional Select tabs, Quick delete, Settings.
+- Empty tablet: New tab, optional new window/incognito window (or new incognito tab), Settings, and conditional Quick delete.
+
+The grid implementation must preserve these smaller context-specific model lists. It must not show page-only actions when the current menu is in overview or empty-tablet mode.
+
+### First-pass V1 grouping proposal (not yet implemented)
+
+For the ordinary active-page menu, the initial high-frequency page can prioritize:
+
+1. New tab
+2. New incognito tab
+3. Bookmarks
+4. History
+5. Downloads
+6. Share
+7. Find in page
+8. Translate
+9. Reload/Stop
+10. Settings
+
+The secondary page retains every other original action, including Back/Forward if they are not kept in a persistent top row, Page info, Quick delete, Recent tabs, Extensions, Page zoom, Print, Reader mode, Download page, Open with, Add to Home screen, Request desktop site, Auto Dark, NTP customizations, Help, Exit (Cromite addition), window/group actions, update/custom rows, and all conditional or supervised-user entries.
+
+This is a grouping proposal, not a code-level commitment: before implementation, reconcile it with the actual Cromite patch series (especially the added Exit action, Help restoration, bottom-toolbar menu reversal, and any custom menu IDs). The existing Back/Forward/Bookmark/Download/Page-info/Reload icon row cannot simply be dropped; every action in it must remain reachable. The first page may use a persistent row for navigation actions only if the final layout still matches the agreed two-page five-column design and does not create duplicate actions.
+
+### Implementation boundary
+
+The new paged grid should be a reusable menu view type that consumes original menu item models and retains their menu IDs, enabled/checked/managed state, icons, visible titles, and accessibility descriptions. The context-specific delegate should classify models only after its existing builders have applied all visibility rules. Update and other custom rows must remain live and must not be copied into stale one-time grid state.
+
+Exact pinned-source inventory is now documented. The generic handler/binder and its child-click dispatch path still require exact-tag reinspection before a code patch is written. No two-page menu implementation patch or runtime test is claimed at this stage.
