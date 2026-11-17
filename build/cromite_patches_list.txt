@@ -273,7 +273,6 @@ Override-the-MV2-deprecation.patch
 Remove-sideloading-of-version-dll.patch
 Use-browser-navigation-handler.patch
 Cromite-Branding--improve-settings-ui.patch
-Integrate-Cromite-Android-string-parts.patch
 Disable-Posture-API.patch
 PublicKeyCredential-fingerprinting-mitigations.patch
 Disable-Web-Bluetooth-by-default-in-desktop-platforms.patch
@@ -330,3 +329,4 @@ Eyeo-Adblock-for-Cromite.patch
 # extension patches
 Experimental-support-for-extensions-on-Android.patch
 Enable-extension-in-incognito.patch
+Integrate-Cromite-Android-string-parts.patch
