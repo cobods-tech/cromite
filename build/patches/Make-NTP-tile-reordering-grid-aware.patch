@@ -18,7 +18,7 @@ Auto-scroll remains disabled for the non-scrollable grid.
 diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java b/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java
 --- a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java
 +++ b/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileMovement.java
-@@ -20,7 +20,7 @@ import java.util.List;
+@@ -20,5 +20,5 @@ import java.util.List;
  /**
 - * Manages transient movement and animation of a row of {@link TileView} instances that are being
 + * Manages transient movement and animation of a grid of {@link TileView} instances that are being
@@ -33,7 +33,7 @@ diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/til
      private final List<@Nullable ViewPropertyAnimator> mAnimators;
      private boolean mIsActive;
      private int mAnimateBarrier;
-@@ -35,7 +36,7 @@ public class TileMovement {
+@@ -35,14 +36,15 @@ public class TileMovement {
      /**
 -     * @param tileViews A non-empty row of tiles to manage. The X-coordinates are assumed to ascend
 -     * (LTR) or descend (RTL).
@@ -51,7 +51,7 @@ diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/til
 +            mOriginalY.add(tileView.getY());
              mAnimators.add(null);
          }
-@@ -68,17 +70,19 @@ public class TileMovement {
+@@ -68,12 +70,16 @@ public class TileMovement {
       * @return Index of the {@link #mTileViews} element whose X-coordinate is nearest to {@param x},
       * preferring lower index on a tie.
       */
@@ -71,7 +71,7 @@ diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/til
              if (bestDist > dist) {
                  bestDist = dist;
                  bestIndex = i;
-@@ -89,10 +93,23 @@ public class TileMovement {
+@@ -89,11 +95,25 @@ public class TileMovement {
      public float getXLo() {
 -        return Math.min(mOriginalX.get(0), mOriginalX.get(mOriginalX.size() - 1));
 +        float min = Float.POSITIVE_INFINITY;
@@ -99,13 +99,13 @@ diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/til
 +        return Math.max(mOriginalY.get(0), mOriginalY.get(mOriginalY.size() - 1));
 +    }
 +
-@@ -106,7 +120,8 @@ public class TileMovement {
+@@ -106,4 +126,5 @@ public class TileMovement {
      public void moveTile(int index, int newIndex, boolean isAnimated, @Nullable Runnable onEnd) {
          TileView tileView = mTileViews.get(index);
          float x = mOriginalX.get(newIndex);
 +        float y = mOriginalY.get(newIndex);
          ViewPropertyAnimator oldAnimator = mAnimators.get(index);
-@@ -119,10 +134,11 @@ public class TileMovement {
+@@ -119,7 +140,8 @@ public class TileMovement {
              animator.withEndAction(onEnd);
          }
 -        animator.x(x).start();
@@ -115,7 +115,7 @@ diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/til
 +        tileView.setY(y);
          if (onEnd != null) {
              onEnd.run();
-@@ -211,6 +227,7 @@ public class TileMovement {
+@@ -211,5 +233,6 @@ public class TileMovement {
              }
              mTileViews.get(i).setTranslationX(0f);
 +            mTileViews.get(i).setTranslationY(0f);
@@ -125,49 +125,49 @@ diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/til
 diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragSession.java b/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragSession.java
 --- a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragSession.java
 +++ b/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragSession.java
-@@ -88,6 +88,7 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
+@@ -88,3 +111,4 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
  
      // Relative X-margin: Multiply by tile width to get the X-margin.
      private static final float DRAG_X_MARGIN_RATIO = 0.2f;
 +    private static final float DRAG_Y_MARGIN_RATIO = 0.2f;
-@@ -96,6 +97,7 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
+@@ -96,2 +120,3 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
      private final @Px float mStartY;
      private final @Px float mAnchorX;
 +    private final @Px float mAnchorY;
-@@ -105,6 +107,8 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
+@@ -105,2 +130,4 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
      private float mXLo;
      private float mXHi;
 +    private float mYLo;
 +    private float mYHi;
-@@ -126,8 +130,9 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
+@@ -126,4 +153,5 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
          mTileWidth = mDelegate.getTileWidth();
          mStartX = fixEventX(eventX);
 -        mStartY = eventY;
 +        mStartY = fixEventY(eventY);
          mAnchorX = mStartX - mFromView.getX();
 +        mAnchorY = mStartY - mFromView.getY();
-@@ -140,6 +145,9 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
+@@ -140,3 +168,6 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
          float dragXMarginPx = DRAG_X_MARGIN_RATIO * mTileWidth;
          mXLo = mTileMovement.getXLo() - dragXMarginPx;
          mXHi = mTileMovement.getXHi() + dragXMarginPx;
 +        float dragYMarginPx = DRAG_Y_MARGIN_RATIO * mTileWidth;
 +        mYLo = mTileMovement.getYLo() - dragYMarginPx;
 +        mYHi = mTileMovement.getYHi() + dragYMarginPx;
-@@ -194,8 +202,9 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
+@@ -194,3 +225,4 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
 -    public void updateFromView(float eventX) {
 +    public void updateFromView(float eventX, float eventY) {
          mFromView.setX(MathUtils.clamp(fixEventX(eventX) - mAnchorX, mXLo, mXHi));
 +        mFromView.setY(MathUtils.clamp(fixEventY(eventY) - mAnchorY, mYLo, mYHi));
          updateToIndexAndAnimate();
-@@ -215,7 +224,7 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
+@@ -215,2 +247,2 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
          float rawDx = fixEventX(eventX) - mStartX;
 -        float rawDy = eventY - mStartY;
 +        float rawDy = fixEventY(eventY) - mStartY;
-@@ -227,7 +236,7 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
+@@ -227,1 +259,2 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
 -        int newToIndex = mTileMovement.getIndexOfViewNearestTo(mFromView.getX());
 +        int newToIndex =
 +                mTileMovement.getIndexOfViewNearestTo(mFromView.getX(), mFromView.getY());
-@@ -295,4 +305,12 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
+@@ -295,4 +328,9 @@ class TileDragSession implements TileDragAutoScroll.Delegate {
      private float fixEventX(float eventX) {
          return eventX + mFromView.getX();
      }
@@ -180,7 +180,7 @@ diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/til
 diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragDelegateImpl.java b/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragDelegateImpl.java
 --- a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragDelegateImpl.java
 +++ b/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileDragDelegateImpl.java
-@@ -141,7 +141,7 @@ class TileDragDelegateImpl implements TileDragDelegate, TileDragSession.Delegate {
+@@ -141,4 +179,4 @@ class TileDragDelegateImpl implements TileDragDelegate, TileDragSession.Delegate {
                  }
                  if (mPhase == DragPhase.DOMINATE) {
 -                    mTileDragSession.updateFromView(event.getX());
