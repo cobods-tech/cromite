@@ -46,6 +46,11 @@ The pinned 153.0.8010.37 `AppMenuItemViewBinder.java` was inspected directly:
 Implementation consequence: the new two-page cell view should consume the existing child `PropertyModel` objects (not create unrelated click callbacks), display `TITLE` beneath each icon, preserve `TITLE_CONDENSED` for accessibility, and call the same `AppMenuClickHandler` for taps/long presses. It must also hide unused cells and respect each child's `ENABLED`, `CHECKED`, and `HIGHLIGHTED` values.
 
 Source files checked against the pinned 153.0.8010.37 GitHub raw tree: `AppMenuItemViewBinder.java` and `chrome/browser/ui/android/appmenu/internal/BUILD.gn`. The latter explicitly lists the Java sources and XML resources that must be extended when adding a new binder/layout.
+## Dynamic action-state updates
+
+The pinned 153.0.8010.37 `AppMenuPropertiesDelegateImpl.java` was also inspected. Its `loadingStateChanged()` locates the reload action inside the icon-row `ADDITIONAL_ICONS` list, updates the icon/title/accessibility label, then replaces the parent model's entire `ADDITIONAL_ICONS` list because the child list itself is not observed.
+
+The paged menu must therefore rebind when the parent `ADDITIONAL_ICONS` property changes. It must not copy the child models once at menu construction and then keep stale labels/icons. The reload/stop action is an important test case because its icon and accessible label change while the menu can be open.
 ## V1 implementation requirements
 
 1. Keep the existing model IDs and click-handler route for every original menu action.
