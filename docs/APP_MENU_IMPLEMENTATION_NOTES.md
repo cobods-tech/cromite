@@ -51,6 +51,19 @@ Source files checked against the pinned 153.0.8010.37 GitHub raw tree: `AppMenuI
 The pinned 153.0.8010.37 `AppMenuPropertiesDelegateImpl.java` was also inspected. Its `loadingStateChanged()` locates the reload action inside the icon-row `ADDITIONAL_ICONS` list, updates the icon/title/accessibility label, then replaces the parent model's entire `ADDITIONAL_ICONS` list because the child list itself is not observed.
 
 The paged menu must therefore rebind when the parent `ADDITIONAL_ICONS` property changes. It must not copy the child models once at menu construction and then keep stale labels/icons. The reload/stop action is an important test case because its icon and accessible label change while the menu can be open.
+## Exact menu-model construction path (Chromium 153.0.8010.37)
+
+The pinned `AppMenuPropertiesDelegateImpl.java` source was fetched from the Chromium 153.0.8010.37 tag. It establishes an important boundary:
+
+- `AppMenuPropertiesDelegateImpl` is **abstract** in this baseline. Its final `getMenuItems()` method resets reader-mode bookkeeping, calls the abstract `buildMenuModelList()`, stores the returned `ModelList`, and returns it.
+- Therefore the real page/overview/empty-state menu composition is owned by a concrete subclass implementing `buildMenuModelList()`. Editing only the base class or only the row XML cannot reliably reorganize the full menu.
+- The base class already exposes `buildModelForIcon(...)` and `buildModelForIconRow(...)`. The former builds a child action model with its original menu item ID, visible title, condensed accessibility title, enabled state, and icon; the latter wraps those child models in `ADDITIONAL_ICONS`.
+- This confirms a safe implementation route is possible without inventing action callbacks: reuse the original child `PropertyModel` objects and preserve their menu IDs, then let the existing handler assign the click handler recursively.
+- The `AppMenuHandler.AppMenuItemType` enum in this baseline contains `STANDARD`, `TITLE_BUTTON`, `THREE_BUTTON_ROW`, `FOUR_BUTTON_ROW`, and `FIVE_BUTTON_ROW`; adding a paged grid type requires incrementing `NUM_ENTRIES` and registering a matching binder/layout in `AppMenuHandlerImpl`.
+- The concrete subclass that owns `buildMenuModelList()` has not yet been positively identified in the Cromite patch checkout. It must be located before changing menu grouping; do not guess its path or create a patch against an assumed subclass.
+
+This also corrects a potential implementation shortcut: the five-button `icon_row_menu_id` is only one action group, not the full menu. A full menu redesign must deliberately select which original action models are promoted into the two-page grid and which are retained as secondary rows, while preserving the page/overview/empty-state branches and dynamic state.
+
 ## V1 implementation requirements
 
 1. Keep the existing model IDs and click-handler route for every original menu action.
