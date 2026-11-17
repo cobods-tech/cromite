@@ -506,7 +506,7 @@ jobs:
                     PATH="$tool_dir:$PATH"
                     ;;
                 esac
-              done < <(find "$sdk_root" -type f \\( -name apkanalyzer -o -name apksigner \\) -printf '%h\\n' 2>/dev/null | sort -u)
+              done < <(find "$sdk_root" -type f \( -name apkanalyzer -o -name apksigner \) -printf '%h\n' 2>/dev/null | sort -u)
             fi
           done
 
