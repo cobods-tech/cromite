@@ -3358,7 +3358,7 @@ new file mode 100644
 +    <message name="IDS_STORAGE_MANAGEMENT_EXTENSION_RESET_APP_DIALOG_TITLE" desc="Title of the reset extension dialog in the storage UI used to reset the app.">
 +        Delete extension data?
 +    </message>
-+    <message name="IDS_STORAGE_MANAGEMENT_EXTENSION_RESET_APP_DIALOG_TEXT" desc="Text of the reset extension dialoag in the storage UI.">
++    <message name="IDS_STORAGE_MANAGEMENT_EXTENSION_RESET_APP_DIALOG_TEXT" desc="Confirmation text warning that resetting the extension app data permanently deletes all stored extension data.">
 +        All Chrome’s extension data will be deleted permanently.
 +    </message>
 +</grit-part>
@@ -3369,10 +3369,10 @@ new file mode 100644
 @@ -0,0 +1,9 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<grit-part>
-+    <message name="IDS_ANDROID_EXTENSIONS_TITLE" desc="">
++    <message name="IDS_ANDROID_EXTENSIONS_TITLE" desc="Title of the Android settings entry that enables experimental browser extension support.">
 +        Enable Extensions
 +    </message>
-+    <message name="IDS_ANDROID_EXTENSIONS_SUMMARY" desc="">
++    <message name="IDS_ANDROID_EXTENSIONS_SUMMARY" desc="Summary explaining that extension support on Android is experimental.">
 +        Enable experimental support for extensions in Android
 +    </message>
 +</grit-part>
