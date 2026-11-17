@@ -86,9 +86,9 @@ A focused scan of the active patch list found existing Cromite customizations th
 
 - Add-exit-menu-item.patch adds an Exit action to both page and overview menu construction. It must remain available in the redesigned menu.
 - Remove-help-menu-item.patch comments out the Help item in TabbedAppMenuPropertiesDelegate and also suppresses several Help entries in settings/autofill-related screens. It additionally changes the Help WebUI route to the Cromite GitHub issue tracker and short-circuits the normal help flow. This is a real feature/UI removal, not merely moving Help to a secondary page.
-- The redesigned menu must not silently inherit this removal as if Help never existed. A follow-up compatibility patch should restore a visible Help entry (at minimum in the app menu) and preserve a working route; settings-page Help entries should be audited separately rather than indiscriminately re-enabled.
+- The redesigned menu must not silently inherit this removal as if Help never existed. A follow-up compatibility patch restores a visible Help entry in the main app menu; settings-page Help entries remain a separate audit item.
 
-This audit is based on the actual patch files in this repository's active patch list. No restoration patch has been applied yet.
+This audit is based on the actual patch files in this repository's active patch list. The restoration patch is listed separately below.
 
 ## Help entry restoration patch added
 
@@ -121,3 +121,15 @@ Repository verification performed: the new patch file exists, its target context
 - Chromium `AppMenuItemProperties.java` (menu item ID, title, icon, click-handler properties): https://chromium.googlesource.com/chromium/src/+/refs/heads/main/chrome/browser/ui/android/appmenu/java/src/org/chromium/chrome/browser/ui/appmenu/AppMenuItemProperties.java
 
 The research links are architectural cross-checks; the implementation target remains the repository's pinned Chromium 153.0.8010.37 source, not Chromium main.
+
+
+## Additional click-handler safety check (must be resolved before coding)
+
+A current Chromium upstream cross-check exposed a subtle risk in the generic handler path: in the inspected `AppMenuHandlerImpl.updateModelForHighlightAndClick()` implementation, child models in `ADDITIONAL_ICONS` receive their `CLICK_HANDLER` inside the `highlightedId != null` branch. The parent model receives its handler unconditionally. This means it is unsafe to assume that simply nesting five child models under a new grid parent guarantees working taps in every menu-open path.
+
+This cross-check is from a newer upstream source revision and is **not proof** of the exact 153.0.8010.37 behavior. Before implementing the grid against the pinned source, re-open the exact pinned `AppMenuHandlerImpl.java` and verify:
+- whether child action models always receive `CLICK_HANDLER`, including when no item is highlighted;
+- whether child `POSITION` values are needed by the click dispatcher;
+- whether the existing five-button row relies on a separate binding/click path that the new view must preserve.
+
+If the pinned implementation has the same conditional assignment, the new binder must not work around it by inventing direct menu callbacks. Instead, make the smallest generic handler change that assigns the existing `AppMenuClickHandler` and any required position/highlight state to every child action model, then test normal, incognito, overview, and bottom-toolbar menu opening. This is a potential dead-button failure and is a release blocker until tested.
