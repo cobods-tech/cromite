@@ -81,7 +81,8 @@ The Android GN configuration sets `chrome_public_manifest_package = "org.cromite
 ## Validation status
 
 - Upstream zh-CN catalog declarations: confirmed from Chromium source.
-- Cromite GRDP parent integration: added to the patch series; not yet build-verified.\n- Cromite custom-string zh-CN translations: not yet added; generated message IDs must be obtained from the exact GRIT build.
+- Cromite GRDP parent integration: added to the patch series; not yet build-verified.
+- Cromite custom-string zh-CN translations: not yet added; generated message IDs must be obtained from the exact GRIT build.
 - Full APK locale packaging: not yet verified.
 - Runtime Chinese UI: not yet tested.
 - APK build, release signing, and in-place update: not yet completed.
