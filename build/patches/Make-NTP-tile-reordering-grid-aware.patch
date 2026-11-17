@@ -91,12 +91,16 @@ diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/til
  
 +    /** @return The minimum Y-coordinate among managed tiles. */
 +    public float getYLo() {
-+        return Math.min(mOriginalY.get(0), mOriginalY.get(mOriginalY.size() - 1));
++        float min = Float.POSITIVE_INFINITY;
++        for (float y : mOriginalY) min = Math.min(min, y);
++        return min;
 +    }
 +
 +    /** @return The maximum Y-coordinate among managed tiles. */
 +    public float getYHi() {
-+        return Math.max(mOriginalY.get(0), mOriginalY.get(mOriginalY.size() - 1));
++        float max = Float.NEGATIVE_INFINITY;
++        for (float y : mOriginalY) max = Math.max(max, y);
++        return max;
 +    }
 +
 @@ -106,4 +126,5 @@ public class TileMovement {
