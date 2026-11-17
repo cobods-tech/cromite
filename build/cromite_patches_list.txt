@@ -146,6 +146,7 @@ Disable-crash-reporting.patch
 Samsung-Note-9-SDK27-crazylinker-workaround.patch
 Disable-TLS-resumption.patch
 Move-navigation-bar-to-bottom.patch
+Enable-bottom-toolbar-by-default.patch
 Welcome-screen.patch
 Add-site-engagement-flag.patch
 Enable-Certificate-Transparency.patch
