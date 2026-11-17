@@ -241,22 +241,22 @@ new file mode 100644
 +<?xml version="1.0" encoding="utf-8"?>
 +<grit-part>
 +  <message name="IDS_JAVASCRIPT_JIT_PERMISSION_TITLE" desc="Title of the permission to run javascript [CHAR_LIMIT=32]" formatter_data="android_java">
-+    JavaScript 即时编译
++    JavaScript JIT
 +  </message>
 +  <message name="IDS_SETTINGS_SITE_SETTINGS_JAVASCRIPT_JIT_DESCRIPTION_CROMITE" desc="Description of the Javascript JIT content setting." formatter_data="android_java">
 +    启用 V8 的即时编译（JIT）和 WebAssembly 支持
 +  </message>
 +  <message name="IDS_WEBSITE_SETTINGS_CATEGORY_JAVASCRIPT_JIT_ENABLED" desc="Summary text explaining that sites are allowed to compile JavaScript in JIT mode." formatter_data="android_java">
-+    允许 JIT 和 WebAssembly
++    Allow JIT and WebAssembly
 +  </message>
 +  <message name="IDS_WEBSITE_SETTINGS_CATEGORY_JAVASCRIPT_JIT_DISABLED" desc="Summary text explaining that sites are running JavaScript in JITless mode." formatter_data="android_java">
-+    禁止 JIT 和 WebAssembly
++    Block JIT and WebAssembly
 +  </message>
 +  <message name="IDS_WEBSITE_SETTINGS_ADD_SITE_DESCRIPTION_JAVASCRIPT_JIT_ALLOW" desc="The description for the allow Javascript JIT for website dialog." formatter_data="android_java">
-+    允许网站使用即时编译（JIT），可提升性能，但也会增加安全风险。
++    Allow sites to use just-in-time compilation; more performant but a constant source of security vulnerabilities.
 +  </message>
 +  <message name="IDS_WEBSITE_SETTINGS_ADD_SITE_DESCRIPTION_JAVASCRIPT_JIT_BLOCK" desc="The description for the block Javascript JIT for website dialog." formatter_data="android_java">
-+    禁止网站使用即时编译，仅使用解释执行 JavaScript；性能较低，但可降低相关安全风险。
++    Block sites from using just-in-time compilation, using only interpreted JavaScript; less performant but more secure against security vulnerabilities.
 +  </message>
 +</grit-part>
 diff --git a/components/content_settings/core/browser/bromite_content_settings/javascript_jit.inc b/components/content_settings/core/browser/bromite_content_settings/javascript_jit.inc
