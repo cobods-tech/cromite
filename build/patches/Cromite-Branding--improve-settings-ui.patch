@@ -273,16 +273,16 @@ new file mode 100644
 @@ -0,0 +1,15 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<grit-part>
-+    <message name="IDS_BROWSING_DATA_SECTION_TITLE" desc="">
++    <message name="IDS_BROWSING_DATA_SECTION_TITLE" desc="Heading for the group of settings that control browsing history, cached files, and other locally stored browsing data.">
 +        Browsing data
 +    </message>
-+    <message name="IDS_DATA_EXPOSED_TO_WEBSITE_SECTION_TITLE" desc="">
++    <message name="IDS_DATA_EXPOSED_TO_WEBSITE_SECTION_TITLE" desc="Heading for settings that control information websites can receive or observe while the user browses.">
 +        Data exposed to the websites
 +    </message>
-+    <message name="IDS_INCOGNITO_RELATED_SECTION_TITLE" desc="">
++    <message name="IDS_INCOGNITO_RELATED_SECTION_TITLE" desc="Heading for settings related to Incognito mode and private browsing sessions.">
 +        Incognito mode
 +    </message>
-+    <message name="IDS_DATA_EXPOSED_TO_DEVICE_SECTION_TITLE" desc="">
++    <message name="IDS_DATA_EXPOSED_TO_DEVICE_SECTION_TITLE" desc="Heading for settings that control information exposed to apps or other users of this device.">
 +        Data exposed in the device
 +    </message>
 +</grit-part>
