@@ -1,0 +1,23 @@
+From: OpenAI
+Subject: [PATCH] Restore custom link action on simplified Android NTP
+
+Keep the Add Custom Link tile reachable in the compact grid. The grid
+layout provides addNonTileViewWithWidth() for non-tile children, so use
+that API rather than the old linear-layout addUiView() method.
+
+---
+ chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileRenderer.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileRenderer.java b/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileRenderer.java
+--- a/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileRenderer.java
++++ b/chrome/android/java/src/org/chromium/chrome/browser/suggestions/tile/TileRenderer.java
+@@ -225,7 +225,7 @@ public class TileRenderer {
+             if (shouldShowAddNewButton(sectionTiles)) {
+                 TileView addCustomLinksButton = buildAddCustomLinksButton(parent, setupDelegate);
+-                //parent.addUiView(addCustomLinksButton, mTileWidth);
++                parent.addNonTileViewWithWidth(addCustomLinksButton, mTileWidth);
+             }
+         }
+     }
+--
