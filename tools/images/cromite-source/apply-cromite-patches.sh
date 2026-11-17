@@ -58,6 +58,9 @@ git commit -m ":NOEXPORT: third_party/boringssl repo" >/dev/null
 
 git prune
 
+echo -e ${RED} ------- validate GRIT fragment integration ${NC}
+python3 ../../cromite/tools/verify-grit-fragment-integration.py || exit 1
+
 echo -e ${RED} ------- patches ${NC}
 cat ../../cromite/build/cromite_patches_list.txt
 echo
