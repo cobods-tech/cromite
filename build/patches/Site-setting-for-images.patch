@@ -229,11 +229,11 @@ new file mode 100644
 +    图片
 +  </message>
 +  <message name="IDS_SITE_SETTINGS_TYPE_IMAGES_MID_SENTENCE" desc="The label used for images site settings controls when used mid-sentence." formatter_data="android_java">
-+    Images
++    图片
 +  </message>
 +</if>
 +  <message name="IDS_IMAGES_PERMISSION_TITLE" desc="Title of the permission to show images [CHAR-LIMIT=32]" formatter_data="android_java">
-+    Images
++    图片
 +  </message>
 +  <message name="IDS_WEBSITE_SETTINGS_ADD_SITE_DESCRIPTION_IMAGES" desc="The description for the allow Images on website dialog." formatter_data="android_java">
 +    允许指定网站加载图片，并阻止其他网站加载图片
