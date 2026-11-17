@@ -219,7 +219,7 @@ jobs:
           done
           normalized="${KEYSTORE_CERT_SHA256//:/}"
           if [[ ! "$normalized" =~ ^[[:xdigit:]]{64}$ ]]; then
-            echo "ERROR: KEYSTORE_CERT_SHA256 must be a  SHA-256 fingerprint (64 hex digits, colons optional)." >&2
+            echo "ERROR: KEYSTORE_CERT_SHA256 must be a SHA-256 fingerprint (64 hex digits, colons optional)." >&2
             exit 2
           fi
 
