@@ -115,3 +115,15 @@ The Android extension-support patch creates two additional Cromite-specific GRDP
 The Android extension strings also received translator-context descriptions. The upstream `chrome/app/extensions_strings.grdp` is an existing parent resource fragment modified by the extension patch; it is not one of the newly created Cromite Android GRDP files.
 
 **Still unverified:** no exact Chromium 153.0.8010.37 checkout has yet applied the complete patch series. The final GRIT run must verify all four part paths, XML validity, message-name uniqueness, generated Android resources, and unchanged upstream resource-ID mappings.
+
+### Additional ad-blocking and extension UI
+
+The patch review also found custom Adblock Plus settings and Android extension-management strings. These include enabling/disabling ad blocking, checking filter-list updates, privileged anti-circumvention/snippet controls and explanations, opening filter repositories and documentation, selected filter-list counts, extension storage usage, clearing/resetting extension data, and enabling experimental Android extensions.
+
+The newly added extension GRDP messages are now part of the Android GRIT catalog. Translator descriptions for the Adblock Plus settings messages that previously had empty descriptions have also been added. The extension toggle and summary messages now have translator context.
+
+Updater menu labels previously displayed 'Update Bromite' and 'Restart Bromite'; these visible labels now say Cromite. This is a branding-only text correction. The underlying legacy updater endpoints and implementation have **not** been changed in this localization pass; they require a separate compatibility/security review before any endpoint change.
+
+### Remaining scope
+
+Custom GRIT messages are not yet translated into zh-CN because their numeric message IDs have not been generated from the pinned Chromium source. The proxy menu entry is one Android-resource exception already given a zh-CN override. The patch-wide scan is still targeted rather than exhaustive, and the complete source checkout/build has not been run.
