@@ -30,6 +30,12 @@ The patch also makes changes that conflict with the requirement to retain origin
 
 These are not just visual simplifications; they disable or bypass existing tile interaction/custom-link behavior. Do not copy these changes into a new design without first deciding how to preserve custom-link creation, tile reordering, and related accessibility behavior. The preferred direction is to keep the new compact grid but restore equivalent user actions rather than silently removing them.
 
+## Custom-link action restoration patch
+
+A follow-up patch, `build/patches/Restore-NTP-custom-link-entry.patch`, now restores the Add Custom Link tile in the simplified grid. The original NTP patch comments out the call that inserts this action. The replacement uses `MostVisitedTilesGridLayout.addNonTileViewWithWidth()`, which is implemented by the grid layout introduced in the same NTP patch and accepts the same view/width arguments.
+
+The follow-up is listed immediately after `Restore-Simplified-NTP-launch.patch`, so it applies after the line it restores. This is a narrow source-level restoration; it has not yet been applied with `git am` to a full Chromium 153.0.8010.37 checkout or compiled. Tile drag/reorder and auto-scroll remain unresolved because the grid intentionally has no horizontal scroll container and its drag delegate currently returns null for tile data/outer view.
+
 ## Implementation boundaries
 
 - Keep Chromium's existing NTP search box and navigation delegate; do not create a parallel search implementation.
