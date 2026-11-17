@@ -90,6 +90,14 @@ A focused scan of the active patch list found existing Cromite customizations th
 
 This audit is based on the actual patch files in this repository's active patch list. No restoration patch has been applied yet.
 
+## Help entry restoration patch added
+
+A follow-up patch, build/patches/Restore-help-entry-in-android-app-menu.patch, now reverses the one-line menu removal introduced by Remove-help-menu-item.patch. It is appended after the existing extension and GRIT integration patches in build/cromite_patches_list.txt, so it is applied after the original removal.
+
+The patch restores buildHelpItem() in the normal page-mode app menu. The existing Cromite chrome_pages.cc behavior routes the Help action to the Cromite issue tracker; this patch does not re-enable Google's help destination. It also does not restore the separate Help controls hidden in individual settings screens. Those remain a separate scope decision.
+
+Repository verification performed: the new patch file exists, its target context matches the removal hunk, and the patch list ends with the GRIT integration patch followed by the Help restoration patch. A full git am against the downloaded Chromium 153.0.8010.37 source and Android build have not yet been run.
+
 ## V1 implementation requirements
 
 1. Keep the existing model IDs and click-handler route for every original menu action.
