@@ -116,7 +116,7 @@ The Android extension-support patch creates two additional Cromite-specific GRDP
 
 The Android extension strings also received translator-context descriptions. The upstream `chrome/app/extensions_strings.grdp` is an existing parent resource fragment modified by the extension patch; it is not one of the newly created Cromite Android GRDP files.
 
-**Still unverified:** no exact Chromium 153.0.8010.37 checkout has yet applied the complete patch series. The final GRIT run must verify all four part paths, XML validity, message-name uniqueness, generated Android resources, and unchanged upstream resource-ID mappings.
+**Important correction:** `7831` is the current line number written in the integration patch hunk, not a verified line number from an exact Chromium 153.0.8010.37 checkout. It must not be treated as confirmed. No exact pinned-source checkout has yet applied the complete patch series. The final GRIT run must verify all four part paths, XML validity, message-name uniqueness, generated Android resources, and unchanged upstream resource-ID mappings.
 
 ### Additional ad-blocking and extension UI
 
@@ -135,3 +135,9 @@ Custom GRIT messages are not yet translated into zh-CN because their numeric mes
 The experimental user-scripts patch adds components/user_scripts/strings/userscripts_strings.grdp and explicitly includes it from components/components_strings.grd. This is already wired to its parent catalog; its translations belong to the components strings zh-CN XTB rather than the Android Chrome strings XTB. Its 11 messages include user-script settings, enable/disable labels, add/view-source actions, metadata labels, an installation confirmation with a FILE placeholder, and a security warning.
 
 The Adblock Plus Android patch adds strings to chrome/browser/adblock/android/adblock_strings.grd, while the Eyeo patch also modifies the existing components/error_page_strings.grdp. These belong to separate GRIT catalogs and must be audited against their own zh-CN outputs/translation expectations; they must not be incorrectly appended to the Android Chrome GRD.
+
+## APK verification workflow hardening (2026-11-18)
+
+The Android arm64 post-build verification step now searches configured Android SDK roots and common SDK installation directories for `apkanalyzer` and `apksigner`, then adds their containing directories to `PATH` before invoking the APK verifier. This avoids relying solely on an undocumented pre-existing PATH configuration in the custom build container.
+
+This is a workflow robustness change only. It has not been exercised on the self-hosted runner; the SDK installation layout, tool discovery, APK locale-entry check, package metadata, signing certificate, and actual APK output still require a real build run.
