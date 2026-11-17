@@ -4,6 +4,7 @@ Subject: Localize Cromite privacy settings section labels in Chinese
 Keep the existing GRIT message identifiers and provide Simplified Chinese
 fallback text for the Cromite-specific privacy settings categories.
 
+---
 diff --git a/chrome/browser/ui/android/strings/cromite_android_chrome_strings_grd/Cromite-settings-ui.grdp b/chrome/browser/ui/android/strings/cromite_android_chrome_strings_grd/Cromite-settings-ui.grdp
 --- a/chrome/browser/ui/android/strings/cromite_android_chrome_strings_grd/Cromite-settings-ui.grdp
 +++ b/chrome/browser/ui/android/strings/cromite_android_chrome_strings_grd/Cromite-settings-ui.grdp
