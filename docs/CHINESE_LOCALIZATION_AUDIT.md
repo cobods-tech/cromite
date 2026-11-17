@@ -36,7 +36,7 @@ It is ordered after the patches that create those files. The hunk format and pat
 
 ## Cromite-specific English strings identified
 
-An initial targeted review of the bottom-toolbar, startup-page, settings, and first-run patches identified 11 translatable messages. This is a **partial inventory, not a complete count**: a subsequent scan of other UI-related patches found additional custom strings in bookmark import/export, tab/session behavior, external intents, history retention, autofill, site permissions, and other settings. Do not treat the table below as the full localization workload:
+An initial targeted review of the bottom-toolbar, startup-page, settings, and first-run patches identified 12 translatable messages. This is a **partial inventory, not a complete count**: a subsequent scan of other UI-related patches found additional custom strings in bookmark import/export, tab/session behavior, external intents, history retention, autofill, site permissions, and other settings. Do not treat the table below as the full localization workload:
 
 | Message ID | English source |
 |---|---|
@@ -48,13 +48,14 @@ An initial targeted review of the bottom-toolbar, startup-page, settings, and fi
 | `IDS_DATA_EXPOSED_TO_WEBSITE_SECTION_TITLE` | Data exposed to the websites |
 | `IDS_INCOGNITO_RELATED_SECTION_TITLE` | Incognito mode |
 | `IDS_DATA_EXPOSED_TO_DEVICE_SECTION_TITLE` | Data exposed in the device |
+| `IDS_CROMITE_CONTENT_SETTINGS_TITLE` | Cromite content settings |
 | `IDS_FRE_CONTINUE` | Continue |
 | `IDS_AUTO_UPDATER_CHECK` | Automatically check for Cromite app updates |
 | `IDS_BROMITE_FRE_FOOTER_PRIVACY_POLICY` | First-run privacy-policy explanation with four link placeholders |
 
 These are not guaranteed to exist in Chromium's upstream zh-CN translation bundles because they are introduced by Cromite patches. The first-run fragment also defines four URL-valued messages (`IDS_PRIVACY_LINK1` through `IDS_PRIVACY_LINK4`) with `translateable="false"`; those are not Chinese UI copy and must remain URLs.
 
-Additional targeted scan results (not yet exhaustively deduplicated) include `IDS_MENU_EXIT`, bookmark import/export and overwrite prompts, `IDS_CLOSE_TABS_ON_EXIT_TITLE/SUMMARY`, custom-tab privacy settings, history-retention options, native autofill settings, view-source and bookmark-all-tabs menu entries, session permission choices, clear-data-on-exit settings, context-menu settings, autoplay/images/WebGL/WebRTC/viewport site-setting labels and descriptions, and share-intent prompts. The `Content-settings-infrastructure.patch` also introduces a literal English preference title (`Cromite content settings`) rather than a GRIT string; this must be converted to a localizable resource. This confirms that the earlier 11-message table is only a starting subset.
+Additional targeted scan results (not yet exhaustively deduplicated) include `IDS_MENU_EXIT`, bookmark import/export and overwrite prompts, `IDS_CLOSE_TABS_ON_EXIT_TITLE/SUMMARY`, custom-tab privacy settings, history-retention options, native autofill settings, view-source and bookmark-all-tabs menu entries, session permission choices, clear-data-on-exit settings, context-menu settings, autoplay/images/WebGL/WebRTC/viewport site-setting labels and descriptions, and share-intent prompts. The `Content-settings-infrastructure.patch` originally introduced a literal English preference title (`Cromite content settings`). It has now been changed to reference a new GRIT resource, `IDS_CROMITE_CONTENT_SETTINGS_TITLE`, added to the settings GRDP fragment. The resource is now localizable, although its zh-CN translation is still pending. This confirms that the 12-message table is only a starting subset.
 
 ## GRIT requirements for custom strings
 
@@ -66,7 +67,7 @@ Chromium's localization guidance establishes that:
 
 Therefore, do not replace the English source text in the Cromite GRDP with Chinese. That would make Chinese the fallback source for every locale rather than a proper zh-CN translation. A previous experimental patch that did this was removed from the active patch list and deleted before any build.
 
-Before adding translations, complete the patch-wide UI-string inventory, then verify the exact Chromium 153 parent GRD integration, generated message IDs, the parent GRD's translation-expectation coverage, and XTB paths. Do not guess message IDs or create a speculative XTB file. The seven messages in the two GRDP fragments are only part of the initial 11-message subset; toolbar and startup-page strings are defined elsewhere in the existing Android GRD.
+Before adding translations, complete the patch-wide UI-string inventory, then verify the exact Chromium 153 parent GRD integration, generated message IDs, the parent GRD's translation-expectation coverage, and XTB paths. Do not guess message IDs or create a speculative XTB file. The eight messages in the two GRDP fragments are only part of the initial 12-message subset; toolbar and startup-page strings are defined elsewhere in the existing Android GRD.
 
 ## Package identity
 
