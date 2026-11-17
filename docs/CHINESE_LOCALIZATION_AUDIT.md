@@ -112,7 +112,7 @@ This inventory is still not exhaustive. It is based on targeted patch scans of u
 
 ### Additional Android extension GRDP integration
 
-The Android extension-support patch creates two additional Cromite-specific GRDP fragments in the same Android strings directory: `Enable-extensions-Android.grdp` and `Extensions-Android.grdp`. These were not covered by the original integration hunk. The integration patch now includes both fragments, and its entry has been moved to the very end of the patch list so that it runs after the extension-support patch has created them. The integration hunk currently appends all four Cromite-specific GRDP fragments immediately before the parent `</messages>` tag.
+The Android extension-support patch creates two additional Cromite-specific GRDP fragments in the same Android strings directory: `Enable-extensions-Android.grdp` and `Extensions-Android.grdp`. These were not covered by the original integration hunk. The integration patch now includes both fragments, and its entry has been moved to the very end of the patch list so that it runs after the extension-support patch has created them. The integration hunk appends all four Cromite-specific GRDP fragments immediately before the parent `</messages>` tag. The hunk line number has been corrected to the closing-tag position in the pinned Chromium 153.0.8010.37 source (file line 7831); the complete patch series still requires a real `git am` test against that checkout.
 
 The Android extension strings also received translator-context descriptions. The upstream `chrome/app/extensions_strings.grdp` is an existing parent resource fragment modified by the extension patch; it is not one of the newly created Cromite Android GRDP files.
 
