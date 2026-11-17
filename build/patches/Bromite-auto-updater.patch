@@ -1643,9 +1643,9 @@ diff --git a/chrome/browser/ui/android/strings/android_chrome_strings.grd b/chro
        <!-- Main menu items -->
        <message name="IDS_MENU_UPDATE" desc="Menu item for updating chrome. [CHAR_LIMIT=24]">
 -        Update Chrome
-+        Update Bromite
++        Update Cromite
 +      </message>
-+      <message name="IDS_MENU_UPDATE_SUMMARY_VULNERABLE" desc="Content description for the menu button when it is covered by the update icon that is displayed when the current version of Bromite is vulnerable.">
++      <message name="IDS_MENU_UPDATE_SUMMARY_VULNERABLE" desc="Content description for the menu button when it is covered by the update icon that is displayed when the current version of Cromite is vulnerable.">
 +        Update not available. Read more
        </message>
        <message name="IDS_MENU_UPDATE_SUMMARY_DEFAULT" desc="Summary string for update menu item explaining that a newer version of Chrome is available. [CHAR_LIMIT=30]">
@@ -1664,7 +1664,7 @@ diff --git a/chrome/browser/ui/android/strings/android_chrome_strings.grd b/chro
 +        Update ready
 +      </message>
 +      <message name="IDS_MENU_INLINE_UPDATE_READY_SUMMARY" desc="Summary text that is shown when Chrome has downloaded an update for itself and is ready to be restarted, which will apply the update.  This lets the user know the update will restart. [CHAR_LIMIT=24]">
-+        Restart Bromite
++        Restart Cromite
 +      </message>
        <message name="IDS_MENU_NEW_WINDOW" desc="Menu item for opening a new window. [CHAR_LIMIT=27]">
          New window
