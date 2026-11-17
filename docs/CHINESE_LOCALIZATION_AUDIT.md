@@ -141,3 +141,17 @@ The Adblock Plus Android patch adds strings to chrome/browser/adblock/android/ad
 The Android arm64 post-build verification step now searches configured Android SDK roots and common SDK installation directories for `apkanalyzer` and `apksigner`, then adds their containing directories to `PATH` before invoking the APK verifier. This avoids relying solely on an undocumented pre-existing PATH configuration in the custom build container.
 
 This is a workflow robustness change only. It has not been exercised on the self-hosted runner; the SDK installation layout, tool discovery, APK locale-entry check, package metadata, signing certificate, and actual APK output still require a real build run.
+
+
+### Targeted site-permission string audit (2026-11-18)
+
+A focused read of the active site-permission patches covered:
+- `Add-autoplay-site-setting.patch`
+- `Site-setting-for-images.patch`
+- `JIT-site-settings.patch`
+- `Add-webRTC-site-settings.patch`
+- `Change-popup-site-setting.patch`
+
+The custom source messages include autoplay, image loading, JavaScript JIT/WebAssembly, WebRTC, and popup/redirect labels, summaries, exception-list labels, and explanatory copy. They are currently English source strings and therefore remain part of the Cromite-specific zh-CN translation workload. The WebRTC enabled/disabled summaries are the literal strings "Enabled" and "Disabled"; the JIT description is "Enable the JIT compiler and WebAssembly support in V8". These are not missing/empty messages.
+
+No Chinese text was left in the English GRDP source messages. An attempted direct source-string translation was reverted because it would make Chinese the fallback text for every locale, contrary to the GRIT localization requirements above. The correct next step is to obtain generated message IDs from a successful pinned Chromium 153 GRIT run, then add translations to the correct zh-CN XTB catalog(s). This targeted review does not establish that all site-permission strings or all custom UI strings have been found.
