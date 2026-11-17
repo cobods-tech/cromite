@@ -11421,51 +11421,51 @@ new file mode 100755
 +
 +  <!-- Preferences -->
 +  <message name="IDS_PREFS_USERSCRIPTS_SETTINGS"
-+           desc="."
++           desc="Title of the browser settings screen for managing user scripts."
 +           formatter_data="android_java">
 +    User Scripts
 +  </message>
 +
-+  <message name="IDS_OPTION_USERSCRIPT_FLAG" desc="." formatter_data="android_java">
++  <message name="IDS_OPTION_USERSCRIPT_FLAG" desc="Preference label that enables or disables execution of user-installed scripts on web pages." formatter_data="android_java">
 +    Activate User Scripts
 +  </message>
 +
-+  <message name="IDS_OPTION_USERSCRIPT_FLAG_ON" desc=". [CHAR-LIMIT=32]" formatter_data="android_java">
++  <message name="IDS_OPTION_USERSCRIPT_FLAG_ON" desc="Short label for the enabled state of the user scripts setting. [CHAR-LIMIT=32]" formatter_data="android_java">
 +    ON
 +  </message>
-+  <message name="IDS_OPTION_USERSCRIPT_FLAG_OFF" desc=". [CHAR-LIMIT=32]" formatter_data="android_java">
++  <message name="IDS_OPTION_USERSCRIPT_FLAG_OFF" desc="Short label for the disabled state of the user scripts setting. [CHAR-LIMIT=32]" formatter_data="android_java">
 +    OFF
 +  </message>
 +
-+  <message name="IDS_ADD_SCRIPT" desc=". [CHAR-LIMIT=32]" formatter_data="android_java">
++  <message name="IDS_ADD_SCRIPT" desc="Button label for adding or installing a user script. [CHAR-LIMIT=32]" formatter_data="android_java">
 +    Add script
 +  </message>
-+  <message name="IDS_SCRIPTS_LIST_DESCRIPTION" desc="." formatter_data="android_java">
++  <message name="IDS_SCRIPTS_LIST_DESCRIPTION" desc="Explanatory text describing experimental support for Greasemonkey-compatible user scripts." formatter_data="android_java">
 +    Experimental support for Greasemonkey-style user scripts.
 +  </message>
 +
-+  <message name="IDS_SCRIPTS_ITEM_VERSION" desc="." formatter_data="android_java">
++  <message name="IDS_SCRIPTS_ITEM_VERSION" desc="Label preceding the version number of an installed user script." formatter_data="android_java">
 +    Version:
 +  </message>
-+  <message name="IDS_SCRIPTS_ITEM_FILENAME" desc="." formatter_data="android_java">
++  <message name="IDS_SCRIPTS_ITEM_FILENAME" desc="Label preceding the filename of an installed user script." formatter_data="android_java">
 +    File:
 +  </message>
-+  <message name="IDS_SCRIPTS_ITEM_URL" desc="." formatter_data="android_java">
++  <message name="IDS_SCRIPTS_ITEM_URL" desc="Label preceding the source URL of a user script." formatter_data="android_java">
 +    Url:
 +  </message>
 +
-+  <message name="IDS_SCRIPTS_VIEW_SOURCE" desc=". [CHAR-LIMIT=32]" formatter_data="android_java">
++  <message name="IDS_SCRIPTS_VIEW_SOURCE" desc="Button or menu label for viewing the source code of a user script. [CHAR-LIMIT=32]" formatter_data="android_java">
 +    View source
 +  </message>
 +
-+  <message name="IDS_ASK_TO_INSTALL" desc=". [CHAR-LIMIT=32]" formatter_data="android_java">
++  <message name="IDS_ASK_TO_INSTALL" desc="Confirmation prompt asking whether to install a user script from the supplied location, followed by a security warning. Preserve the FILE placeholder and warning meaning." formatter_data="android_java">
 +    Do you want to install this user script from following location?
 +
 +<ph name="FILE">%s</ph>
 +
 +NOTE: only install user scripts that you have verified are secure, user scripts can steal your credentials and data.
 +  </message>
-+  <message name="IDS_NO" desc=". [CHAR-LIMIT=32]" formatter_data="android_java">
++  <message name="IDS_NO" desc="Negative response button in the user-script installation confirmation dialog. [CHAR-LIMIT=32]" formatter_data="android_java">
 +    No
 +  </message>
 +
