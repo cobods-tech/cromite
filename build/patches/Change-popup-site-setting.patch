@@ -137,7 +137,7 @@ diff --git a/components/blocked_content_strings.grdp b/components/blocked_conten
        Always show
      </message>
 +    <message name="IDS_POPUPS_BLOCKED_INFOBAR_BUTTON_SHOW_THIS_TIME" desc="Pop-up Blocking Show Button [CHAR_LIMIT=32]">
-+      Open this time
++      仅本次打开
 +    </message>
      <message name="IDS_POPUPS_BLOCKED_INFOBAR_TEXT" desc="Pop-up Blocking Title [CHAR_LIMIT=32] [ICU Syntax]">
        {NUM_POPUPS,plural,=1{Pop-up blocked} other{# pop-ups blocked}}
@@ -273,7 +273,7 @@ new file mode 100644
 +    阻止网站显示弹出式窗口和重定向
 +  </message>
 +  <message name="IDS_WEBSITE_SETTINGS_CATEGORY_POPUP_DESCRIPTION" desc="" formatter_data="android_java">
-+    When on, sites can use pop-ups and redirects. When off, sites can’t use pop-ups and redirects.
++    开启后，网站可以显示弹出式窗口并进行重定向；关闭后，网站将无法执行这些操作。
 +  </message>
 +  <message name="IDS_WEBSITE_SETTINGS_CATEGORY_POPUP_BLOCK_ALL" desc="" formatter_data="android_java">
 +    阻止所有弹出式窗口
