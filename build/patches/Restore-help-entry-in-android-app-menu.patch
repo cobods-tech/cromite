@@ -1,0 +1,24 @@
+From: OpenAI
+Subject: [PATCH] Restore help entry in Android app menu
+
+Keep the Help action reachable from the main app menu. Cromite redirects
+the help action to its issue tracker, so restoring the menu entry does
+not restore the removed Google help destination.
+
+---
+ chrome/android/java/src/org/chromium/chrome/browser/tabbed_mode/TabbedAppMenuPropertiesDelegate.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/chrome/android/java/src/org/chromium/chrome/browser/tabbed_mode/TabbedAppMenuPropertiesDelegate.java b/chrome/android/java/src/org/chromium/chrome/browser/tabbed_mode/TabbedAppMenuPropertiesDelegate.java
+--- a/chrome/android/java/src/org/chromium/chrome/browser/tabbed_mode/TabbedAppMenuPropertiesDelegate.java
++++ b/chrome/android/java/src/org/chromium/chrome/browser/tabbed_mode/TabbedAppMenuPropertiesDelegate.java
+@@ -564,7 +564,7 @@ public class TabbedAppMenuPropertiesDelegate extends AppMenuPropertiesDelegateImpl
+         }
+ 
+         // Help
+-        // modelList.add(buildHelpItem());
++        modelList.add(buildHelpItem());
+ 
+         // Managed by
+         if (shouldShowManagedByMenuItem(currentTab)) {
+--
