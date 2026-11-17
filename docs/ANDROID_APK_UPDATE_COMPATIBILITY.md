@@ -33,6 +33,6 @@ This document records the non-negotiable release checks for the Chinese UI build
 
 ## Current build infrastructure constraint
 
-The repository's existing `.github/workflows/build_cromite.yaml` is manually dispatched and uses custom runner labels (`dev` / `ci`), custom container images, persistent build volumes, and repository secrets. Its input SHA is described as an upstream `uazo/cromite` SHA. It must not be treated as a ready-made build path for this fork's custom branch until the workflow is adapted and the required runner and signing secrets are confirmed.
+The repository's existing `.github/workflows/build_cromite.yaml` is manually dispatched and uses custom runner labels (`dev` / `ci`), custom container images, persistent build volumes, and repository secrets. Its input SHA is described as an upstream `uazo/cromite` SHA. The paired release workflow also checks out `uazo/cromite` and creates the release there, rather than publishing a fork-specific build. Neither workflow is a ready-made build path for this fork's custom branch until both are adapted and the required runner, artifact destination, and signing secrets are confirmed. The fork currently reports no workflow runs.
 
 No APK is considered delivered until all checks above have been completed.
